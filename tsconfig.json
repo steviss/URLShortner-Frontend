@@ -1,0 +1,30 @@
+{
+    "extends": "./tsconfig.extends.json",
+    "compilerOptions": {
+        "target": "es6",
+        "lib": ["es2016.array.include", "es6", "es2017", "esnext.asynciterable", "dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "removeComments": true,
+        "sourceMap": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "noUnusedLocals": true,
+        "noImplicitThis": true,
+        "experimentalDecorators": true,
+        "useDefineForClassFields": true,
+        "jsx": "react",
+        "noFallthroughCasesInSwitch": true
+    },
+    "include": ["src"],
+    "exclude": ["node_modules", "build"]
+}

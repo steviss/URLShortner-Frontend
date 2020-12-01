@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./src",
+        "paths": {
+            "@root": ["./"],
+            "@api": ["./api/index.ts"],
+            "@api/*": ["./api/*"],
+            "@assets/*": ["./assets/*"],
+            "@headers/*": ["./headers/*"],
+            "@components/*": ["./components/*"],
+            "@modal": ["./modal/index.tsx"],
+            "@objects/*": ["./objects/*"],
+            "@layout": ["./layout/index.tsx"],
+            "@pages": ["./pages/index.tsx"],
+            "@utility/*": ["./utility/*"],
+            "@stores": ["./stores/index.tsx"],
+            "@drawers/*": ["./drawers/*"],
+            "@types/*": ["./types/*"],
+            "@graphql": ["./generated/graphql.tsx"]
+        }
+    }
+}
