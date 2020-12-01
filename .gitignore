@@ -6,6 +6,9 @@
 # env stuff
 .env
 
+# Esl lint cache
+.eslintcache
+
 # docker stuff
 docker/
 
