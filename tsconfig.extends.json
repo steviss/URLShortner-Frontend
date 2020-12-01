@@ -11,9 +11,11 @@
             "@modal": ["./modal/index.tsx"],
             "@objects/*": ["./objects/*"],
             "@layout": ["./layout/index.tsx"],
+            "@routes": ["./routes/index.tsx"],
             "@pages": ["./pages/index.tsx"],
             "@utility/*": ["./utility/*"],
             "@stores": ["./stores/index.tsx"],
+            "@styles": ["./styles/index.ts"],
             "@drawers/*": ["./drawers/*"],
             "@types/*": ["./types/*"],
             "@graphql": ["./generated/graphql.tsx"]
