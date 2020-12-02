@@ -1,3 +1,3 @@
-import ShortenForm from './ShortenFormComponent';
+import { ShortenForm } from './ShortenForm';
 
 export { ShortenForm };

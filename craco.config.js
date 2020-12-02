@@ -9,7 +9,7 @@ module.exports = {
             '@assets': path.resolve(__dirname, 'src/assets/'),
             '@components': path.resolve(__dirname, 'src/components/index.tsx'),
             '@modal': path.resolve(__dirname, 'src/modal/index.tsx'),
-            '@objects': path.resolve(__dirname, 'src/objects/'),
+            '@objects': path.resolve(__dirname, 'src/objects/index.tsx'),
             '@routes': path.resolve(__dirname, 'src/routes/index.tsx'),
             '@layout': path.resolve(__dirname, 'src/layout/index.tsx'),
             '@pages': path.resolve(__dirname, 'src/pages/index.tsx'),

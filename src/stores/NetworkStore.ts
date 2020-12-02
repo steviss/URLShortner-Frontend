@@ -13,7 +13,6 @@ import {
     UserChangePasswordForm,
     UpdateRedirectForm,
     CreateCollectionForm,
-    MeResponseDataType,
 } from './ApiCalls';
 import { config } from '@utility/config';
 
@@ -40,7 +39,7 @@ export class NetworkStore extends BaseStore implements ApiCalls {
     //User Calls
     logout = (arg: LogoutForm) => this.api.post('api/user/logout', arg).then((response) => this.response<ResponseDataType>(response));
     userChangePassword = (arg: UserChangePasswordForm) => this.api.post('api/user/changePassword', arg).then((response) => this.response<ResponseDataType>(response));
-    me = () => this.api.post('api/user/me').then((response) => this.response<MeResponseDataType>(response));
+    me = () => this.api.post('api/user/me').then((response) => this.response<ResponseDataType>(response));
     //Redirect Api Calls
     createRedirect = (arg: CreateRedirectForm) => this.api.post('api/redirect/create', arg).then((response) => this.response<ResponseDataType>(response));
     readRedirect = (id: string) => this.api.get(`api/redirect/read?id=${id}`).then((response) => this.response<ResponseDataType>(response));

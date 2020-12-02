@@ -9,7 +9,7 @@
             "@headers/*": ["./headers/*"],
             "@components": ["./components/index.tsx"],
             "@modal": ["./modal/index.tsx"],
-            "@objects/*": ["./objects/*"],
+            "@objects": ["./objects/index.tsx"],
             "@layout": ["./layout/index.tsx"],
             "@routes": ["./routes/index.tsx"],
             "@pages": ["./pages/index.tsx"],

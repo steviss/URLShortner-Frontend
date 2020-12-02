@@ -110,7 +110,7 @@ export interface ApiCalls {
     //User Calls
     logout: (arg: LogoutForm) => Promise<ResponseDataType>;
     userChangePassword: (arg: UserChangePasswordForm) => Promise<ResponseDataType>;
-    me: () => Promise<MeResponseDataType>;
+    me: () => Promise<ResponseDataType>;
     //Redirect Api Calls
     createRedirect: (arg: CreateRedirectForm) => Promise<ResponseDataType>;
     readRedirect: (id: string) => Promise<ResponseDataType>;

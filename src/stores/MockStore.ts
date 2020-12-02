@@ -1,7 +1,9 @@
-import { ApiCalls, MeResponseDataType, ResponseDataType } from './ApiCalls';
+import { ApiCalls, ResponseDataType, UserType } from './ApiCalls';
 import BaseStore from './BaseStore';
 
 export class MockStore extends BaseStore implements ApiCalls {
+    userLoggedIn: boolean = false;
+    user: UserType = { id: 'lbalblaba', email: 'sdasdsa' };
     register = () => {
         return Promise.resolve<ResponseDataType>({ status: 'success', message: 'Succesfully created an account!' });
     };
@@ -19,7 +21,11 @@ export class MockStore extends BaseStore implements ApiCalls {
         return Promise.resolve<ResponseDataType>({ status: 'success', message: 'Succesfully created an account!' });
     };
     me = () => {
-        return Promise.resolve<MeResponseDataType>({ id: 'lbalblaba', email: 'sdasdsa' });
+        if (this.userLoggedIn) {
+            return Promise.resolve<ResponseDataType>({ status: 'success', message: 'User authed!', data: this.user });
+        } else {
+            return Promise.resolve<ResponseDataType>({ status: 'error', message: 'User not authed!' });
+        }
     };
     //Redirect Api Calls
     createRedirect = () => {

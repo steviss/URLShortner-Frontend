@@ -1,54 +1,45 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { AppBar, Toolbar, Typography, Button, IconButton, makeStyles } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { config } from '@utility/config';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useStore } from '@stores';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    userButton: {
-        marginLeft: theme.spacing(2),
-    },
-    logo: {
-        position: 'relative',
-        textTransform: 'uppercase',
-        fontSize: '1.5rem',
-        fontWeight: 600,
-    },
-}));
+import { useHistory } from 'react-router-dom';
+import { buttonObjectStyle, topHeaderStyle } from '@styles';
 
 export const TopHeader: React.FC = observer(() => {
-    const classes = useStyles();
+    const topHeaderCSS = topHeaderStyle();
     const {
-        layoutStore: { userLoggedIn, toggleMenuDrawerState, toggleUserDrawerState },
+        layoutStore: { toggleMenuDrawerState, toggleUserDrawerState },
+        userStore: { userLoggedIn },
     } = useStore();
+    const history = useHistory();
+    const buttonObjectCSS = buttonObjectStyle();
     return (
-        <AppBar position="sticky">
-            <Toolbar className={classes.root}>
-                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleMenuDrawerState}>
+        <AppBar position="sticky" className={topHeaderCSS.topBar}>
+            <Toolbar className={topHeaderCSS.root}>
+                <IconButton edge="start" className={topHeaderCSS.menuButton} color="inherit" aria-label="menu" onClick={toggleMenuDrawerState}>
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h4" className={classes.logo}>
+                <Typography variant="h4" className={topHeaderCSS.logo}>
                     {config.__APP_NAME__}
                 </Typography>
                 {userLoggedIn ? (
-                    <Button variant="contained" color="secondary" endIcon={<LockOpenIcon />}>
-                        Login
-                    </Button>
-                ) : (
-                    <IconButton edge="start" className={classes.userButton} color="inherit" aria-label="menu" onClick={toggleUserDrawerState}>
+                    <IconButton edge="start" className={topHeaderCSS.userButton} color="inherit" aria-label="menu" onClick={toggleUserDrawerState}>
                         <AccountCircleIcon />
                     </IconButton>
+                ) : (
+                    <Button
+                        className={buttonObjectCSS.root}
+                        onClick={() => {
+                            history.push('/login');
+                        }}
+                        endIcon={<LockOpenIcon />}
+                    >
+                        Login
+                    </Button>
                 )}
             </Toolbar>
         </AppBar>
