@@ -9,6 +9,8 @@ export class LayoutStore extends BaseStore {
     clientWindowWidth: number = 0;
     clientWindowHeight: number = 0;
     mediaBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'hd' | false = false;
+    userDrawerState: boolean = false;
+    menuDrawerState: boolean = false;
     constructor(rootStore: RootStore) {
         super(rootStore);
         makeObservable(this, {
@@ -18,6 +20,10 @@ export class LayoutStore extends BaseStore {
             setWindowWidth: action,
             setWindowHeight: action,
             toggleScrolling: action,
+            toggleMenuDrawerState: action,
+            toggleUserDrawerState: action,
+            menuDrawerState: observable,
+            userDrawerState: observable,
             userLoggedIn: observable,
             coverVisible: observable,
             coverClick: observable,
@@ -26,6 +32,14 @@ export class LayoutStore extends BaseStore {
             mediaBreakpoint: observable,
         });
     }
+    toggleMenuDrawerState = () => {
+        console.log('togglemenu', this.menuDrawerState);
+        this.menuDrawerState = !this.menuDrawerState;
+    };
+    toggleUserDrawerState = () => {
+        console.log('toggle u menu', this.menuDrawerState);
+        this.userDrawerState = !this.userDrawerState;
+    };
     setMediaBreakpoint = (val: number) => {
         if (val <= 480) {
             return 'xs';

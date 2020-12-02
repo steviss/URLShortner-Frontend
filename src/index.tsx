@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { CssBaseline, withStyles } from '@material-ui/core';
+import { CssBaseline, ThemeProvider, withStyles } from '@material-ui/core';
+import { StoreProvider } from '@stores';
+import { theme } from '@styles';
 const GlobalCss = withStyles({
     // @global is handled by jss-plugin-global.
     '@global': {
@@ -15,9 +17,13 @@ const GlobalCss = withStyles({
 })(() => null);
 ReactDOM.render(
     <React.StrictMode>
-        <CssBaseline />
-        <GlobalCss />
-        <App />
+        <StoreProvider>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <GlobalCss />
+                <App />
+            </ThemeProvider>
+        </StoreProvider>
     </React.StrictMode>,
     document.getElementById('root'),
 );
