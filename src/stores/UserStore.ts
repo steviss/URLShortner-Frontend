@@ -1,6 +1,6 @@
 import BaseStore from './BaseStore';
 import { RootStore } from './RootStore';
-import { makeObservable, observable, runInAction } from 'mobx';
+import { makeObservable, observable, runInAction, action } from 'mobx';
 
 interface UserType {
     id: string;
@@ -10,9 +10,18 @@ interface UserType {
 export class UserStore extends BaseStore {
     user: UserType = {} as UserType;
     userLoggedIn: boolean = false;
+    cookieConsent: boolean = false;
     constructor(rootStore: RootStore) {
         super(rootStore);
-        makeObservable(this, { user: observable });
+        makeObservable(this, {
+            user: observable,
+            userLoggedIn: observable,
+            cookieConsent: observable,
+            checkAuth: action,
+            setUser: action,
+            setLoggedIn: action,
+            setCookieConsent: action,
+        });
     }
     checkAuth = async () => {
         try {
@@ -37,5 +46,8 @@ export class UserStore extends BaseStore {
     };
     setLoggedIn = (status: boolean) => {
         this.userLoggedIn = status;
+    };
+    setCookieConsent = (status: boolean) => {
+        this.cookieConsent = status;
     };
 }

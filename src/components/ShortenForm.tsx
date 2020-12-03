@@ -47,8 +47,13 @@ export const ShortenForm: React.FC = observer(() => {
                                 </Box>
                             ) : null}
                         </div>
-                        <Button disabled={isSubmitting} className={`${shortenFormCSS.button} ${buttonObjectCSS.root}`} onClick={submitForm} endIcon={<ShortTextIcon />}>
-                            Shorten
+                        <Button
+                            disabled={isSubmitting}
+                            className={`${shortenFormCSS.button} ${buttonObjectCSS.root}`}
+                            onClick={submitForm}
+                            endIcon={<ShortTextIcon className={buttonObjectCSS.icon} />}
+                        >
+                            <Typography className={buttonObjectCSS.label}>Shorten</Typography>
                         </Button>
                     </Form>
                 )}

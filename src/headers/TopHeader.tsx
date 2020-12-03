@@ -36,9 +36,9 @@ export const TopHeader: React.FC = observer(() => {
                         onClick={() => {
                             history.push('/login');
                         }}
-                        endIcon={<LockOpenIcon />}
+                        endIcon={<LockOpenIcon className={buttonObjectCSS.icon} />}
                     >
-                        Login
+                        <Typography className={buttonObjectCSS.label}>Login</Typography>
                     </Button>
                 )}
             </Toolbar>

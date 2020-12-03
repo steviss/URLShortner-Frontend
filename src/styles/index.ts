@@ -19,6 +19,7 @@ import { textFieldStyle } from './objects/textField';
 import { submitButtonStyle } from './objects/submitButton';
 import { changePasswordFormStyle } from './components/changePasswordForm';
 import { forgotPasswordFormStyle } from './components/forgotPasswordForm';
+import { cookieConsentStyle } from './components/cookieConsent';
 
 export {
     theme,
@@ -42,4 +43,5 @@ export {
     registerFormStyle,
     changePasswordFormStyle,
     forgotPasswordFormStyle,
+    cookieConsentStyle,
 };

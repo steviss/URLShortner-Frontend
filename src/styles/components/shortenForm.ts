@@ -12,7 +12,8 @@ export const shortenFormStyle = makeStyles((theme) => ({
         alignItems: 'center',
         flex: 1,
         flexDirection: 'row',
-        padding: '1rem',
+        padding: '2rem 1rem',
+        [theme.breakpoints.up('md')]: { padding: '1rem' },
     },
     textFieldContainer: {
         position: 'relative',
