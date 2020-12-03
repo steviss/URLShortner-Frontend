@@ -57,7 +57,7 @@ export const IndexPage: React.FC = observer(() => {
                         },
                     }}
                 />
-                <div className={indexPageCSS.cover}>
+                <Box className={indexPageCSS.cover}>
                     <Container maxWidth="lg" className={indexPageCSS.coverContainer}>
                         <Grid className={indexPageCSS.grid} container>
                             <Paper className={indexPageCSS.formPaper} elevation={3}>
@@ -65,7 +65,7 @@ export const IndexPage: React.FC = observer(() => {
                             </Paper>
                         </Grid>
                     </Container>
-                </div>
+                </Box>
             </PageHeader>
             <PageWrapper>
                 <Paper className={indexPageCSS.landingPaper} square>

@@ -11,6 +11,7 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 export interface RouteType {
+    id: string;
     path: string;
     title: string;
     component?: ReactElement;
@@ -19,6 +20,7 @@ export interface RouteType {
 
 export const userMenuRoutesArray: RouteType[] = [
     {
+        id: 'dashboard',
         path: '/dashboard',
         title: 'Dashboard',
         icon: <DashboardIcon />,
@@ -27,6 +29,7 @@ export const userMenuRoutesArray: RouteType[] = [
 ];
 export const userFooterRoutesArray: RouteType[] = [
     {
+        id: 'logout',
         path: '/logout',
         icon: <ExitToAppIcon />,
         title: 'Logout',
@@ -35,18 +38,21 @@ export const userFooterRoutesArray: RouteType[] = [
 
 export const publicMenuRoutesArray: RouteType[] = [
     {
+        id: 'Home',
         path: '/',
         title: 'Home',
         icon: <HomeIcon />,
         component: <IndexPage />,
     },
     {
+        id: 'terms',
         path: '/terms',
         title: 'Terms',
         icon: <GavelIcon />,
         component: <TermsPage />,
     },
     {
+        id: 'privacy',
         path: '/privacy',
         title: 'Privacy',
         icon: <VpnKeyIcon />,
@@ -56,12 +62,14 @@ export const publicMenuRoutesArray: RouteType[] = [
 
 export const publicFooterRoutesArray: RouteType[] = [
     {
+        id: 'login',
         path: '/login',
         icon: <LockOpenIcon />,
         title: 'Login',
         component: <LoginPage />,
     },
     {
+        id: 'register',
         path: '/register',
         title: 'Register',
         icon: <PersonAddIcon />,
@@ -72,12 +80,12 @@ export const publicFooterRoutesArray: RouteType[] = [
 export const routesArray: RouteType[] = [...publicMenuRoutesArray, ...publicFooterRoutesArray, ...userMenuRoutesArray, ...userFooterRoutesArray];
 
 export default function Routes() {
+    const realRoutes = routesArray.filter((route) => typeof route.component !== 'undefined');
     return (
         <Switch>
-            {routesArray.map((route, i) => {
-                if (!route.component) return <></>;
+            {realRoutes.map((route) => {
                 return (
-                    <Route key={i} exact path={route.path}>
+                    <Route key={route.id} exact path={route.path}>
                         {route.component}
                     </Route>
                 );
