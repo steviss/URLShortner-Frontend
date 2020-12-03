@@ -10,6 +10,7 @@ import { useStore } from '@stores';
 import { sleep } from '@utility/sleep';
 import { SubmitButton } from '@objects';
 import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react';
 //import { useHistory } from 'react-router-dom';
 
 const validationSchema = Yup.object().shape({
@@ -17,7 +18,7 @@ const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
 });
 
-export const LoginForm: React.FC = () => {
+export const LoginForm: React.FC = observer(() => {
     const loginFormCSS = loginFormStyle();
     const initialValues: LoginFormType = { email: '', password: '' };
     const {
@@ -68,4 +69,4 @@ export const LoginForm: React.FC = () => {
             <Divider />
         </Paper>
     );
-};
+});

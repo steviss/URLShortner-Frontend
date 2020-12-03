@@ -1,11 +1,10 @@
 import React from 'react';
-import { observer } from 'mobx-react';
 import { PageWrapper } from '@layout';
 import { registerPageStyle } from '@styles';
 import { RegisterForm } from '@components';
 import { Container, Grid } from '@material-ui/core';
 
-export const RegisterPage: React.FC = observer(() => {
+export const RegisterPage: React.FC = () => {
     const registerPageCSS = registerPageStyle();
     return (
         <PageWrapper pageClass={registerPageCSS.root} defaultWrap={false}>
@@ -16,4 +15,4 @@ export const RegisterPage: React.FC = observer(() => {
             </Container>
         </PageWrapper>
     );
-});
+};

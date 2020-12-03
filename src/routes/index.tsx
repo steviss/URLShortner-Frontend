@@ -1,7 +1,7 @@
 import { DashboardPage, IndexPage, LoginPage, RegisterPage, PrivacyPage, TermsPage, ForgotPasswordPage, ChangePasswordPage } from '@pages';
 import React, { ReactElement } from 'react';
 import { Route } from 'react-router';
-import { Switch } from 'react-router-dom';
+import { Redirect, Switch } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
 import GavelIcon from '@material-ui/icons/Gavel';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
@@ -9,6 +9,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 
 export interface RouteType {
     id: string;
@@ -83,7 +84,7 @@ export const publicUtilityRoutesArray: RouteType[] = [
         id: 'forgot-password',
         path: '/forgot-password',
         title: 'Forgot Password',
-        icon: <PersonAddIcon />,
+        icon: <LockOpenIcon />,
         component: <ForgotPasswordPage />,
     },
     {
@@ -91,7 +92,7 @@ export const publicUtilityRoutesArray: RouteType[] = [
         path: '/change-password/:token',
         title: 'Change Password',
         params: true,
-        icon: <PersonAddIcon />,
+        icon: <RotateLeftIcon />,
         component: <ChangePasswordPage />,
     },
 ];
@@ -102,6 +103,7 @@ export default function Routes() {
     const realRoutes = routesArray.filter((route) => typeof route.component !== 'undefined');
     return (
         <Switch>
+            <Redirect from="/change-password/" exact to="/" />
             {realRoutes.map((route) => {
                 return route.params ? (
                     <Route key={route.id} path={route.path}>

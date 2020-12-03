@@ -2,7 +2,6 @@ import React from 'react';
 import { List, ListItem, ListItemIcon, ListItemText, Paper } from '@material-ui/core';
 import { ReactElement } from 'react';
 import { RouteType } from '@routes';
-import { observer } from 'mobx-react';
 import { useHistory } from 'react-router-dom';
 
 interface RouteLinkProps {
@@ -34,7 +33,7 @@ export const RouteLink = (props: RouteLinkProps) => {
     );
 };
 
-export const DrawerMenu: React.FC<DrawerMenuProps> = observer(({ routes, className = '', closeMenu }) => {
+export const DrawerMenu: React.FC<DrawerMenuProps> = ({ routes, className = '', closeMenu }) => {
     const renderRoutes = () => {
         return routes.map((route, i) => {
             return <RouteLink key={i} to={route.path} primary={route.title} icon={route.icon} onClick={closeMenu} />;
@@ -45,4 +44,4 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = observer(({ routes, classNa
             <List>{renderRoutes()}</List>
         </Paper>
     );
-});
+};

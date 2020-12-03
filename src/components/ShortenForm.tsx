@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import { useStore } from '@stores';
 import { sleep } from '@utility/sleep';
 import { CreateRedirectFormType } from '../types/Redirect';
+import { observer } from 'mobx-react';
 
 const validationSchema = Yup.object({
     slug: Yup.string()
@@ -17,7 +18,7 @@ const validationSchema = Yup.object({
     url: Yup.string().trim().url('Must be a valid URL').required('URL is required in order to shorten it.'),
 });
 
-export const ShortenForm: React.FC = () => {
+export const ShortenForm: React.FC = observer(() => {
     const buttonObjectCSS = buttonStyle();
     const shortenFormCSS = shortenFormStyle();
     const initialValues: CreateRedirectFormType = { url: '', slug: '' };
@@ -68,4 +69,4 @@ export const ShortenForm: React.FC = () => {
             </Box>
         </Paper>
     );
-};
+});

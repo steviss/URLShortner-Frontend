@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react';
 import Particles from 'react-particles-js';
 import { PageWrapper, PageHeader } from '@layout';
 import { indexPageStyle } from '@styles';
@@ -11,7 +10,7 @@ import { ReactComponent as PlanningSVG } from '@assets/images/planning.svg';
 import { ReactComponent as WebsiteSVG } from '@assets/images/website.svg';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
-export const IndexPage: React.FC = observer(() => {
+export const IndexPage: React.FC = () => {
     const indexPageCSS = indexPageStyle();
     return (
         <>
@@ -144,4 +143,4 @@ export const IndexPage: React.FC = observer(() => {
             </PageWrapper>
         </>
     );
-});
+};

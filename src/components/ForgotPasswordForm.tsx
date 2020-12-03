@@ -3,19 +3,20 @@ import { Divider, Paper, Typography } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { InputField } from '@objects';
 import { forgotPasswordFormStyle } from '@styles';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { ForgotPasswordFormType } from '../types/User';
 import * as Yup from 'yup';
 import { useStore } from '@stores';
 import { sleep } from '@utility/sleep';
 import { SubmitButton } from '@objects';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import { observer } from 'mobx-react';
 //import { useHistory } from 'react-router-dom';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
 });
 
-export const ForgotPasswordForm: React.FC = () => {
+export const ForgotPasswordForm: React.FC = observer(() => {
     const forgotPasswordFormCSS = forgotPasswordFormStyle();
     const initialValues: ForgotPasswordFormType = { email: '' };
     const {
@@ -46,7 +47,7 @@ export const ForgotPasswordForm: React.FC = () => {
                             type="submit"
                             isSubmitting={isSubmitting}
                             onClick={submitForm}
-                            endIcon={<PersonAddIcon />}
+                            endIcon={<LockOpenIcon />}
                             label="Reset Password"
                         />
                     </Form>
@@ -55,4 +56,4 @@ export const ForgotPasswordForm: React.FC = () => {
             <Divider />
         </Paper>
     );
-};
+});

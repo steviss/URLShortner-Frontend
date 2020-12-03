@@ -1,12 +1,11 @@
 import React from 'react';
-import { observer } from 'mobx-react';
 import { Box, Container, Grid, Paper, Typography } from '@material-ui/core';
 import { termsPageStyle } from '@styles';
 import { PageHeader, PageWrapper } from '@layout';
 import { config } from '@utility/config';
 import { Link } from 'react-router-dom';
 
-export const TermsPage: React.FC = observer(() => {
+export const TermsPage: React.FC = () => {
     const termsPageCSS = termsPageStyle();
     return (
         <>
@@ -106,4 +105,4 @@ export const TermsPage: React.FC = observer(() => {
             </PageWrapper>
         </>
     );
-});
+};

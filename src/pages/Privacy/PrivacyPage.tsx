@@ -1,11 +1,10 @@
 import React from 'react';
-import { observer } from 'mobx-react';
 import { Box, Container, Grid, Link, Paper, Typography } from '@material-ui/core';
 import { privacyPageStyle } from '@styles';
 import { PageHeader, PageWrapper } from '@layout';
 import { config } from '@utility/config';
 
-export const PrivacyPage: React.FC = observer(() => {
+export const PrivacyPage: React.FC = () => {
     const privacyPageCSS = privacyPageStyle();
     return (
         <>
@@ -134,4 +133,4 @@ export const PrivacyPage: React.FC = observer(() => {
             </PageWrapper>
         </>
     );
-});
+};

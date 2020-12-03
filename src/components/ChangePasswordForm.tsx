@@ -3,12 +3,13 @@ import { Divider, Paper, Typography } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { InputField } from '@objects';
 import { changePasswordFormStyle } from '@styles';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import { ChangePasswordFormType } from '../types/User';
 import * as Yup from 'yup';
 import { useStore } from '@stores';
 import { sleep } from '@utility/sleep';
 import { SubmitButton } from '@objects';
+import { observer } from 'mobx-react';
 //import { useHistory } from 'react-router-dom';
 
 const validationSchema = Yup.object().shape({
@@ -20,7 +21,7 @@ interface ChangePasswordFormProps {
     token: string;
 }
 
-export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ token }) => {
+export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = observer(({ token }) => {
     const changePasswordFormCSS = changePasswordFormStyle();
     const initialValues: ChangePasswordFormType = { token: token, password: '' };
     const {
@@ -51,7 +52,7 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ token })
                             type="submit"
                             isSubmitting={isSubmitting}
                             onClick={submitForm}
-                            endIcon={<PersonAddIcon />}
+                            endIcon={<RotateLeftIcon />}
                             label="Change Password"
                         />
                     </Form>
@@ -60,4 +61,4 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ token })
             <Divider />
         </Paper>
     );
-};
+});
