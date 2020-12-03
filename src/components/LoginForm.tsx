@@ -1,16 +1,15 @@
 import React from 'react';
-import { Box, Button, Divider, Link as LinkMaterial, Paper, TextField, Typography } from '@material-ui/core';
+import { Box, Button, Divider, Paper, TextField } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { ProgressIndicator } from '@objects';
-import { buttonObjectStyle, shortenFormStyle } from '@styles';
-import ShortTextIcon from '@material-ui/icons/ShortText';
-import { Link } from 'react-router-dom';
+import { buttonObjectStyle, loginFormStyle } from '@styles';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 
 export const LoginForm: React.FC = () => {
     const buttonObjectCSS = buttonObjectStyle();
-    const shortenFormCSS = shortenFormStyle();
+    const loginFormCSS = loginFormStyle();
     return (
-        <Paper square className={shortenFormCSS.formPaper}>
+        <Paper square className={loginFormCSS.formPaper}>
             <Formik
                 initialValues={{}}
                 onSubmit={async (values, { setSubmitting }) => {
@@ -20,35 +19,21 @@ export const LoginForm: React.FC = () => {
                 }}
             >
                 {({ submitForm, isSubmitting }) => (
-                    <Form className={shortenFormCSS.form}>
-                        <div className={shortenFormCSS.textFieldContainer}>
-                            <TextField id="url" label="Enter URL" variant="outlined" className={shortenFormCSS.textField} />
-                            {isSubmitting ? (
-                                <Box className={shortenFormCSS.progressLoader}>
-                                    <ProgressIndicator />
-                                </Box>
-                            ) : null}
-                        </div>
-                        <Button type="submit" className={`${shortenFormCSS.button} ${buttonObjectCSS.root}`} onClick={submitForm} endIcon={<ShortTextIcon />}>
-                            Shorten
+                    <Form className={loginFormCSS.form}>
+                        <TextField id="email" label="Enter Username" variant="outlined" />
+                        <TextField id="password" label="Enter Password" variant="outlined" />
+                        {isSubmitting ? (
+                            <Box>
+                                <ProgressIndicator />
+                            </Box>
+                        ) : null}
+                        <Button type="submit" className={`${buttonObjectCSS.root}`} onClick={submitForm} endIcon={<LockOpenIcon />}>
+                            Login
                         </Button>
                     </Form>
                 )}
             </Formik>
             <Divider />
-            <Box className={shortenFormCSS.tos}>
-                <Typography align="center" variant="caption">
-                    By using our service you accept the{' '}
-                    <Link to="/terms" component={LinkMaterial} color="primary">
-                        Terms
-                    </Link>{' '}
-                    and{' '}
-                    <Link to="/privacy" component={LinkMaterial} color="primary">
-                        Privacy
-                    </Link>
-                    .
-                </Typography>
-            </Box>
         </Paper>
     );
 };

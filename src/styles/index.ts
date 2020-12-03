@@ -13,6 +13,7 @@ import { changePasswordPageStyle } from './pages/changePasswordPage';
 import { forgotPasswordPageStyle } from './pages/forgotPasswordPage';
 import { loginPageStyle } from './pages/loginPage';
 import { registerPageStyle } from './pages/registerPage';
+import { loginFormStyle } from './components/loginForm';
 
 export {
     theme,
@@ -30,4 +31,5 @@ export {
     loginPageStyle,
     forgotPasswordPageStyle,
     changePasswordPageStyle,
+    loginFormStyle,
 };
