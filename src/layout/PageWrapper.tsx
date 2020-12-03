@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Box, Container, IconButton, Paper, Snackbar, Typography } from '@material-ui/core';
 import { wrapperStyle, cookieConsentStyle } from '@styles';
 import { useStore } from '@stores';
@@ -11,11 +11,11 @@ interface PageWrapperProps {
 }
 
 export const PageWrapper: React.FC<PageWrapperProps> = observer(({ children, pageClass = '', defaultWrap = true }) => {
-    const [consent, setConsent] = useState<boolean>(false);
     const wrapperCSS = wrapperStyle();
     const cookieConsentCSS = cookieConsentStyle();
     const {
         layoutStore: { setPageWrapperClass, clearPageWrapperClass },
+        userStore: { cookieConsent, setCookieConsent },
     } = useStore();
     useEffect(() => {
         if (!!pageClass) {
@@ -30,10 +30,10 @@ export const PageWrapper: React.FC<PageWrapperProps> = observer(({ children, pag
             {defaultWrap ? (
                 <Container maxWidth="lg" className={wrapperCSS.container}>
                     <Paper>{children}</Paper>
-                    <Snackbar open={!consent} onClose={() => setConsent(true)}>
+                    <Snackbar open={!cookieConsent} onClose={() => setCookieConsent(true)}>
                         <Paper className={cookieConsentCSS.paper} elevation={5}>
                             <Box className={cookieConsentCSS.container}>
-                                <IconButton className={cookieConsentCSS.buttonClose} size="small" onClick={() => setConsent(true)}>
+                                <IconButton className={cookieConsentCSS.buttonClose} size="small" onClick={() => setCookieConsent(true)}>
                                     <CloseIcon fontSize="small" />
                                 </IconButton>
                                 <Typography variant="h4" className={cookieConsentCSS.headline}>
