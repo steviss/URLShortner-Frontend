@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
-export const loginFormStyle = makeStyles((theme) => ({
+export const registerFormStyle = makeStyles((theme) => ({
     formPaper: {
         display: 'flex',
         width: '24rem',

@@ -7,7 +7,7 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useStore } from '@stores';
 import { useHistory } from 'react-router-dom';
-import { buttonObjectStyle, topHeaderStyle } from '@styles';
+import { buttonStyle, topHeaderStyle } from '@styles';
 
 export const TopHeader: React.FC = observer(() => {
     const topHeaderCSS = topHeaderStyle();
@@ -16,7 +16,7 @@ export const TopHeader: React.FC = observer(() => {
         userStore: { userLoggedIn },
     } = useStore();
     const history = useHistory();
-    const buttonObjectCSS = buttonObjectStyle();
+    const buttonObjectCSS = buttonStyle();
     return (
         <AppBar position="sticky" className={topHeaderCSS.topBar}>
             <Toolbar className={topHeaderCSS.root}>

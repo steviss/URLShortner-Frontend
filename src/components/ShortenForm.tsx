@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Button, Divider, Paper, Typography } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { InputField, ProgressIndicator } from '@objects';
-import { buttonObjectStyle, shortenFormStyle } from '@styles';
+import { buttonStyle, shortenFormStyle } from '@styles';
 import ShortTextIcon from '@material-ui/icons/ShortText';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -18,7 +18,7 @@ const validationSchema = Yup.object({
 });
 
 export const ShortenForm: React.FC = () => {
-    const buttonObjectCSS = buttonObjectStyle();
+    const buttonObjectCSS = buttonStyle();
     const shortenFormCSS = shortenFormStyle();
     const initialValues: CreateRedirectFormType = { url: '', slug: '' };
     const {

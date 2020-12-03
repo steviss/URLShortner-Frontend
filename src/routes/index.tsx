@@ -1,4 +1,4 @@
-import { DashboardPage, IndexPage, LoginPage, RegisterPage, PrivacyPage, TermsPage } from '@pages';
+import { DashboardPage, IndexPage, LoginPage, RegisterPage, PrivacyPage, TermsPage, ForgotPasswordPage, ChangePasswordPage } from '@pages';
 import React, { ReactElement } from 'react';
 import { Route } from 'react-router';
 import { Switch } from 'react-router-dom';
@@ -16,6 +16,7 @@ export interface RouteType {
     title: string;
     component?: ReactElement;
     icon?: ReactElement;
+    params?: boolean;
 }
 
 export const userMenuRoutesArray: RouteType[] = [
@@ -77,14 +78,36 @@ export const publicFooterRoutesArray: RouteType[] = [
     },
 ];
 
-export const routesArray: RouteType[] = [...publicMenuRoutesArray, ...publicFooterRoutesArray, ...userMenuRoutesArray, ...userFooterRoutesArray];
+export const publicUtilityRoutesArray: RouteType[] = [
+    {
+        id: 'forgot-password',
+        path: '/forgot-password',
+        title: 'Forgot Password',
+        icon: <PersonAddIcon />,
+        component: <ForgotPasswordPage />,
+    },
+    {
+        id: 'change-password',
+        path: '/change-password/:token',
+        title: 'Change Password',
+        params: true,
+        icon: <PersonAddIcon />,
+        component: <ChangePasswordPage />,
+    },
+];
+
+export const routesArray: RouteType[] = [...publicMenuRoutesArray, ...publicFooterRoutesArray, ...userMenuRoutesArray, ...userFooterRoutesArray, ...publicUtilityRoutesArray];
 
 export default function Routes() {
     const realRoutes = routesArray.filter((route) => typeof route.component !== 'undefined');
     return (
         <Switch>
             {realRoutes.map((route) => {
-                return (
+                return route.params ? (
+                    <Route key={route.id} path={route.path}>
+                        {route.component}
+                    </Route>
+                ) : (
                     <Route key={route.id} exact path={route.path}>
                         {route.component}
                     </Route>

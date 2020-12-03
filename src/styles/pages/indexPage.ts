@@ -42,6 +42,7 @@ export const indexPageStyle = makeStyles((theme) => ({
     landingHeading: {
         color: grey[800],
         fontSize: '2rem',
+        fontFamily: `'Titillium Web', sans-serif`,
         fontWeight: 400,
         marginBottom: '1.5rem',
     },
@@ -51,7 +52,10 @@ export const indexPageStyle = makeStyles((theme) => ({
     },
     featureGrid: {
         padding: '1rem',
-        flexDirection: 'row',
+        flexDirection: 'column',
+        [theme.breakpoints.up('md')]: {
+            flexDirection: 'row',
+        },
     },
     featureItemContainer: {
         display: 'flex',
@@ -72,6 +76,7 @@ export const indexPageStyle = makeStyles((theme) => ({
     featureItemHeading: {
         fontSize: '1.5rem',
         marginBottom: '1.5rem',
+        fontFamily: `'Titillium Web', sans-serif`,
     },
     featureItemContent: {
         display: 'flex',

@@ -5,11 +5,10 @@ import { config } from '@utility/config';
 import { CreateCollectionFormType, UpdateCollectionFormType } from '../types/Collection';
 import { CreateRedirectFormType, UpdateRedirectFormType } from '../types/Redirect';
 import { ResponseDataType } from '../types/Response';
-import { RegisterFormType, ChangePasswordFormType, LogoutFormType, UserChangePasswordFormType, LoginFormType } from '../types/User';
+import { RegisterFormType, ChangePasswordFormType, LogoutFormType, UserChangePasswordFormType, LoginFormType, ForgotPasswordFormType } from '../types/User';
 import { ApiCalls } from './ApiCalls';
 
 export class NetworkStore extends BaseStore implements ApiCalls {
-    activeCalls: string[] = [];
     api: AxiosInstance;
     constructor(rootStore: RootStore) {
         super(rootStore);
@@ -26,6 +25,7 @@ export class NetworkStore extends BaseStore implements ApiCalls {
     //Public Calls
     register = (arg: RegisterFormType) => this.api.post('api/public/register', arg).then((response) => this.response<ResponseDataType>(response));
     login = (arg: LoginFormType) => this.api.post('api/public/login', arg).then((response) => this.response<ResponseDataType>(response));
+    forgotPassword = (arg: ForgotPasswordFormType) => this.api.post('api/public/forgotPassword', arg).then((response) => this.response<ResponseDataType>(response));
     changePassword = (arg: ChangePasswordFormType) => this.api.post('api/public/changePassword', arg).then((response) => this.response<ResponseDataType>(response));
     //User Calls
     logout = (arg: LogoutFormType) => this.api.post('api/user/logout', arg).then((response) => this.response<ResponseDataType>(response));

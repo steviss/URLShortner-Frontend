@@ -3,7 +3,7 @@ import { customDrawerStyle } from './drawer/customDrawer';
 import { theme } from './theme';
 import { wrapperStyle } from './wrapper';
 import { indexPageStyle } from './pages/indexPage';
-import { buttonObjectStyle } from './objects/button';
+import { buttonStyle } from './objects/button';
 import { topHeaderStyle } from './header/topHeader';
 import { progressIndicatorStyle } from './objects/progressIndicator';
 import { shortenFormStyle } from './components/shortenForm';
@@ -14,6 +14,11 @@ import { forgotPasswordPageStyle } from './pages/forgotPasswordPage';
 import { loginPageStyle } from './pages/loginPage';
 import { registerPageStyle } from './pages/registerPage';
 import { loginFormStyle } from './components/loginForm';
+import { registerFormStyle } from './components/registerForm';
+import { textFieldStyle } from './objects/textField';
+import { submitButtonStyle } from './objects/submitButton';
+import { changePasswordFormStyle } from './components/changePasswordForm';
+import { forgotPasswordFormStyle } from './components/forgotPasswordForm';
 
 export {
     theme,
@@ -21,7 +26,7 @@ export {
     customDrawerStyle,
     wrapperStyle,
     indexPageStyle,
-    buttonObjectStyle,
+    buttonStyle,
     topHeaderStyle,
     progressIndicatorStyle,
     shortenFormStyle,
@@ -32,4 +37,9 @@ export {
     forgotPasswordPageStyle,
     changePasswordPageStyle,
     loginFormStyle,
+    textFieldStyle,
+    submitButtonStyle,
+    registerFormStyle,
+    changePasswordFormStyle,
+    forgotPasswordFormStyle,
 };

@@ -78,7 +78,7 @@ export const IndexPage: React.FC = observer(() => {
                         </Typography>
                     </Box>
                     <Grid container spacing={2} className={indexPageCSS.featureGrid}>
-                        <Grid item xs={4} className={indexPageCSS.featureItemContainer}>
+                        <Grid item xs={12} md={4} className={indexPageCSS.featureItemContainer}>
                             <Card className={indexPageCSS.featureItem}>
                                 <CardContent className={indexPageCSS.featureItemContent}>
                                     <Box className={indexPageCSS.featureItemIcon}>
@@ -99,7 +99,7 @@ export const IndexPage: React.FC = observer(() => {
                                 </CardActions>
                             </Card>
                         </Grid>
-                        <Grid item xs={4} className={indexPageCSS.featureItemContainer}>
+                        <Grid item xs={12} md={4} className={indexPageCSS.featureItemContainer}>
                             <Card className={indexPageCSS.featureItem}>
                                 <CardContent className={indexPageCSS.featureItemContent}>
                                     <Box className={indexPageCSS.featureItemIcon}>
@@ -119,7 +119,7 @@ export const IndexPage: React.FC = observer(() => {
                                 </CardActions>
                             </Card>
                         </Grid>
-                        <Grid item xs={4} className={indexPageCSS.featureItemContainer}>
+                        <Grid item xs={12} md={4} className={indexPageCSS.featureItemContainer}>
                             <Card className={indexPageCSS.featureItem}>
                                 <CardContent className={indexPageCSS.featureItemContent}>
                                     <Box className={indexPageCSS.featureItemIcon}>
