@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Divider, Link as LinkMaterial, Paper, Typography } from '@material-ui/core';
+import { Box, Button, Divider, Paper, Typography } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { InputField, ProgressIndicator } from '@objects';
 import { buttonObjectStyle, shortenFormStyle } from '@styles';
@@ -60,11 +60,11 @@ export const ShortenForm: React.FC = () => {
             <Box className={shortenFormCSS.tos}>
                 <Typography align="center" variant="caption">
                     By using our service you accept the{' '}
-                    <Link to="/terms" component={LinkMaterial} color="primary">
+                    <Link key="terms" to={'/terms'} className={shortenFormCSS.tosLinks}>
                         Terms
                     </Link>{' '}
                     and{' '}
-                    <Link to="/privacy" component={LinkMaterial} color="primary">
+                    <Link key="privacy" to={'/privacy'} className={shortenFormCSS.tosLinks}>
                         Privacy
                     </Link>
                     .

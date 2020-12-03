@@ -48,4 +48,12 @@ export const shortenFormStyle = makeStyles((theme) => ({
         flexDirection: 'column',
         padding: '1rem',
     },
+    tosLinks: {
+        color: theme.palette.primary.main,
+        textDecoration: 'none',
+        cursor: 'pointer',
+        '&:hover': {
+            textDecoration: 'underline',
+        },
+    },
 }));

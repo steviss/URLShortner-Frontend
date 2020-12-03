@@ -77,7 +77,7 @@ export default function Routes() {
             {routesArray.map((route, i) => {
                 if (!route.component) return <></>;
                 return (
-                    <Route key={`route-${i}`} exact path={route.path}>
+                    <Route key={i} exact path={route.path}>
                         {route.component}
                     </Route>
                 );
