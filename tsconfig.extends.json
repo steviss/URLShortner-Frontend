@@ -17,7 +17,6 @@
             "@stores": ["./stores/index.tsx"],
             "@styles": ["./styles/index.ts"],
             "@drawers": ["./drawers/index.tsx"],
-            "@types/*": ["./types/*"],
             "@graphql": ["./generated/graphql.tsx"]
         }
     }

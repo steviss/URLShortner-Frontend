@@ -1,4 +1,6 @@
-import { ApiCalls, ResponseDataType, UserType } from './ApiCalls';
+import { ResponseDataType } from '../types/Response';
+import { UserType } from '../types/User';
+import { ApiCalls } from './ApiCalls';
 import BaseStore from './BaseStore';
 
 export class MockStore extends BaseStore implements ApiCalls {

@@ -17,7 +17,6 @@ module.exports = {
             '@stores': path.resolve(__dirname, 'src/stores/index.tsx'),
             '@styles': path.resolve(__dirname, 'src/styles/index.ts'),
             '@drawers': path.resolve(__dirname, 'src/drawers/index.tsx'),
-            '@types': path.resolve(__dirname, 'src/types/'),
             '@graphql': path.resolve(__dirname, 'src/generated/graphql.tsx'),
         },
     },

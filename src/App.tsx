@@ -6,13 +6,15 @@ import { TopHeader } from '@headers/TopHeader';
 import { UserDrawer, MenuDrawer } from '@drawers';
 import { useStore } from '@stores';
 import { BrowserRouter } from 'react-router-dom';
+import { observer } from 'mobx-react';
 
-const App: React.FC = () => {
+const App: React.FC = observer(() => {
     var isIE11 = !!window.MSInputMethodContext;
     if (isIE11) alert('(This site is not optimized for IE. Please use Chrome or Firefox or Edge)');
     const wrapperCSS = wrapperStyle();
     const {
         userStore: { checkAuth },
+        layoutStore: { pageWrapperClass },
     } = useStore();
     useEffect(() => {
         checkAuth();
@@ -20,7 +22,7 @@ const App: React.FC = () => {
     }, []);
     return (
         <BrowserRouter>
-            <main className={wrapperCSS.root}>
+            <main className={`${wrapperCSS.root} ${pageWrapperClass}`}>
                 <TopHeader />
                 <MenuDrawer />
                 <Routes />
@@ -28,6 +30,6 @@ const App: React.FC = () => {
             </main>
         </BrowserRouter>
     );
-};
+});
 
 export default App;

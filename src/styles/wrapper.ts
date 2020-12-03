@@ -5,6 +5,7 @@ export const wrapperStyle = makeStyles((theme) => ({
         flex: 1,
     },
     container: {
+        flex: 1,
         minHeight: '100%',
     },
 }));

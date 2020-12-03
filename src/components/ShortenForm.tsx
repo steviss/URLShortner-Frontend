@@ -8,11 +8,7 @@ import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useStore } from '@stores';
 import { sleep } from '@utility/sleep';
-
-interface ShortenFormValues {
-    url: string;
-    slug: string;
-}
+import { CreateRedirectFormType } from '../types/Redirect';
 
 const validationSchema = Yup.object({
     slug: Yup.string()
@@ -24,7 +20,7 @@ const validationSchema = Yup.object({
 export const ShortenForm: React.FC = () => {
     const buttonObjectCSS = buttonObjectStyle();
     const shortenFormCSS = shortenFormStyle();
-    const initialValues: ShortenFormValues = { url: '', slug: '' };
+    const initialValues: CreateRedirectFormType = { url: '', slug: '' };
     const {
         apiStore: { createRedirect },
     } = useStore();
