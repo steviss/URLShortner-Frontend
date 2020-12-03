@@ -26,7 +26,6 @@ export class NetworkStore extends BaseStore implements ApiCalls {
             timeout: 1000,
         });
     }
-
     response = <T>(data: AxiosResponse<unknown>) => {
         console.log(data);
         const result = data.data;

@@ -1,3 +1,4 @@
+import { InputField } from './InputField';
 import { ProgressIndicator } from './ProgressIndicator';
 
-export { ProgressIndicator };
+export { ProgressIndicator, InputField };

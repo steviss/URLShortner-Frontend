@@ -19,9 +19,15 @@ export const shortenFormStyle = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         flex: 1,
+        padding: '1rem 0',
     },
     textField: {
         flex: 1,
+        '& > .MuiFormHelperText-root': {
+            bottom: '-1.5rem',
+            position: 'absolute',
+            left: 0,
+        },
     },
     button: {
         marginLeft: '1rem',

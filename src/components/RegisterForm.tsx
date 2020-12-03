@@ -1,56 +1,35 @@
 import React from 'react';
-import { Box, Button, Divider, Link as LinkMaterial, Paper, Typography } from '@material-ui/core';
+import { Box, Button, Divider, Link as LinkMaterial, Paper, TextField, Typography } from '@material-ui/core';
 import { Form, Formik } from 'formik';
-import { InputField, ProgressIndicator } from '@objects';
+import { ProgressIndicator } from '@objects';
 import { buttonObjectStyle, shortenFormStyle } from '@styles';
 import ShortTextIcon from '@material-ui/icons/ShortText';
 import { Link } from 'react-router-dom';
-import * as Yup from 'yup';
-import { useStore } from '@stores';
-import { sleep } from '@utility/sleep';
 
-interface ShortenFormValues {
-    url: string;
-    slug: string;
-}
-
-const validationSchema = Yup.object({
-    slug: Yup.string()
-        .trim()
-        .matches(/^[\w-]+$/i),
-    url: Yup.string().trim().url('Must be a valid URL').required('URL is required in order to shorten it.'),
-});
-
-export const ShortenForm: React.FC = () => {
+export const RegisterForm: React.FC = () => {
     const buttonObjectCSS = buttonObjectStyle();
     const shortenFormCSS = shortenFormStyle();
-    const initialValues: ShortenFormValues = { url: '', slug: '' };
-    const {
-        apiStore: { createRedirect },
-    } = useStore();
     return (
         <Paper square className={shortenFormCSS.formPaper}>
             <Formik
-                initialValues={initialValues}
+                initialValues={{}}
                 onSubmit={async (values, { setSubmitting }) => {
                     setSubmitting(true);
-                    await sleep(3000);
-                    await createRedirect(values);
+                    //await callback(values);
                     setSubmitting(false);
                 }}
-                validationSchema={validationSchema}
             >
                 {({ submitForm, isSubmitting }) => (
                     <Form className={shortenFormCSS.form}>
                         <div className={shortenFormCSS.textFieldContainer}>
-                            <InputField id="url" label="Enter URL" variant="outlined" className={shortenFormCSS.textField} placeholder="Enter your url here..." />
+                            <TextField id="url" label="Enter URL" variant="outlined" className={shortenFormCSS.textField} />
                             {isSubmitting ? (
                                 <Box className={shortenFormCSS.progressLoader}>
                                     <ProgressIndicator />
                                 </Box>
                             ) : null}
                         </div>
-                        <Button disabled={isSubmitting} className={`${shortenFormCSS.button} ${buttonObjectCSS.root}`} onClick={submitForm} endIcon={<ShortTextIcon />}>
+                        <Button className={`${shortenFormCSS.button} ${buttonObjectCSS.root}`} onClick={submitForm} endIcon={<ShortTextIcon />}>
                             Shorten
                         </Button>
                     </Form>
