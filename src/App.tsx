@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Routes from '@routes';
+import { Routes } from '@routes';
 import { wrapperStyle } from '@styles';
 import './App.css';
 import { TopHeader } from '@headers/TopHeader';

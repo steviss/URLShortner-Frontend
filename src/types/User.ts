@@ -9,6 +9,11 @@ export interface UserType {
     //updatedAt: string;
 }
 
+export enum UserPermissions {
+    Guest = 0,
+    User = 1,
+}
+
 export interface RegisterFormType {
     email: string;
     password: string;

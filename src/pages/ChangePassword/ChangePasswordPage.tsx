@@ -16,7 +16,7 @@ export const ChangePasswordPage: React.FC = () => {
         <PageWrapper pageClass={loginPageCSS.root} defaultWrap={false}>
             <Container maxWidth="lg" className={loginPageCSS.container}>
                 <Grid className={loginPageCSS.grid}>
-                    <ChangePasswordForm token={token}></ChangePasswordForm>
+                    <ChangePasswordForm token={token} />
                 </Grid>
             </Container>
         </PageWrapper>

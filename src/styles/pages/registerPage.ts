@@ -5,6 +5,7 @@ export const registerPageStyle = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         background: `linear-gradient(${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+        overflow: 'hidden',
     },
     grid: {
         flex: 1,

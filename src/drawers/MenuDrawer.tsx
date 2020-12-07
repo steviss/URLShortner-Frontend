@@ -7,10 +7,12 @@ import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import CloseIcon from '@material-ui/icons/Close';
 import { DrawerMenu } from './DrawerMenu';
 import { publicFooterRoutesArray, publicMenuRoutesArray } from '@routes';
+import { UserPermissions } from '../types/User';
 
 export const MenuDrawer: React.FC = observer(() => {
     const {
         layoutStore: { menuDrawerState, toggleMenuDrawerState },
+        userStore: { userPermissions },
     } = useStore();
     const drawerCSS = drawerStyle();
     const menuDrawerCSS = customDrawerStyle();
@@ -26,7 +28,7 @@ export const MenuDrawer: React.FC = observer(() => {
                 </IconButton>
             </header>
             <DrawerMenu routes={publicMenuRoutesArray} closeMenu={toggleMenuDrawerState} />
-            <DrawerMenu routes={publicFooterRoutesArray} className={menuDrawerCSS.footerMenu} closeMenu={toggleMenuDrawerState} />
+            {userPermissions !== UserPermissions.User ? <DrawerMenu routes={publicFooterRoutesArray} className={menuDrawerCSS.footerMenu} closeMenu={toggleMenuDrawerState} /> : null}
         </Drawer>
     );
 });

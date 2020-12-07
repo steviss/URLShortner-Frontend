@@ -3,7 +3,7 @@ import { RootStore } from './RootStore';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { config } from '@utility/config';
 import { CreateCollectionFormType, UpdateCollectionFormType } from '../types/Collection';
-import { CreateRedirectFormType, UpdateRedirectFormType } from '../types/Redirect';
+import { CreateRedirectFormType, RedirectType, UpdateRedirectFormType } from '../types/Redirect';
 import { ResponseDataType } from '../types/Response';
 import { RegisterFormType, ChangePasswordFormType, LogoutFormType, UserChangePasswordFormType, LoginFormType, ForgotPasswordFormType } from '../types/User';
 import { ApiCalls } from './ApiCalls';
@@ -19,7 +19,7 @@ export class NetworkStore extends BaseStore implements ApiCalls {
     }
     response = <T>(data: AxiosResponse<unknown>) => {
         console.log(data);
-        const result = data.data;
+        const { data: result } = data.data as ResponseDataType;
         return result as T;
     };
     //Public Calls
@@ -30,6 +30,7 @@ export class NetworkStore extends BaseStore implements ApiCalls {
     //User Calls
     logout = (arg: LogoutFormType) => this.api.post('api/user/logout', arg).then((response) => this.response<ResponseDataType>(response));
     userChangePassword = (arg: UserChangePasswordFormType) => this.api.post('api/user/changePassword', arg).then((response) => this.response<ResponseDataType>(response));
+    readUserRedirects = () => this.api.get('api/redirect/readUserRedirects').then((response) => this.response<RedirectType[]>(response));
     me = () => this.api.post('api/user/me').then((response) => this.response<ResponseDataType>(response));
     //Redirect Api Calls
     createRedirect = (arg: CreateRedirectFormType) => this.api.post('api/redirect/create', arg).then((response) => this.response<ResponseDataType>(response));

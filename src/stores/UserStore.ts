@@ -1,6 +1,7 @@
 import BaseStore from './BaseStore';
 import { RootStore } from './RootStore';
 import { makeObservable, observable, runInAction, action } from 'mobx';
+import { UserPermissions } from '../types/User';
 
 interface UserType {
     id: string;
@@ -9,13 +10,13 @@ interface UserType {
 
 export class UserStore extends BaseStore {
     user: UserType = {} as UserType;
-    userLoggedIn: boolean = false;
+    userPermissions: UserPermissions = 0;
     cookieConsent: boolean = false;
     constructor(rootStore: RootStore) {
         super(rootStore);
         makeObservable(this, {
             user: observable,
-            userLoggedIn: observable,
+            userPermissions: observable,
             cookieConsent: observable,
             checkAuth: action,
             setUser: action,
@@ -29,12 +30,12 @@ export class UserStore extends BaseStore {
             if (me.status === 'success') {
                 runInAction(() => {
                     this.setUser(me.data as UserType);
-                    this.setLoggedIn(true);
+                    this.setLoggedIn(UserPermissions.User);
                 });
             } else {
                 runInAction(() => {
                     this.setUser({} as UserType);
-                    this.setLoggedIn(false);
+                    this.setLoggedIn(UserPermissions.Guest);
                 });
             }
         } catch (e) {
@@ -44,8 +45,8 @@ export class UserStore extends BaseStore {
     setUser = (user: UserType) => {
         this.user = user;
     };
-    setLoggedIn = (status: boolean) => {
-        this.userLoggedIn = status;
+    setLoggedIn = (status: UserPermissions) => {
+        this.userPermissions = status;
     };
     setCookieConsent = (status: boolean) => {
         this.cookieConsent = status;

@@ -33,7 +33,7 @@ export const RouteLink = (props: RouteLinkProps) => {
     );
 };
 
-export const DrawerMenu: React.FC<DrawerMenuProps> = ({ routes, className = '', closeMenu }) => {
+export const DrawerMenu: React.FC<DrawerMenuProps> = ({ routes, className = '', closeMenu, children }) => {
     const renderRoutes = () => {
         return routes.map((route, i) => {
             return <RouteLink key={i} to={route.path} primary={route.title} icon={route.icon} onClick={closeMenu} />;
@@ -41,7 +41,10 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ routes, className = '', 
     };
     return (
         <Paper elevation={0} className={className}>
-            <List>{renderRoutes()}</List>
+            <List>
+                {renderRoutes()}
+                {children}
+            </List>
         </Paper>
     );
 };

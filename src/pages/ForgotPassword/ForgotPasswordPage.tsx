@@ -10,7 +10,7 @@ export const ForgotPasswordPage: React.FC = () => {
         <PageWrapper pageClass={loginPageCSS.root} defaultWrap={false}>
             <Container maxWidth="lg" className={loginPageCSS.container}>
                 <Grid className={loginPageCSS.grid}>
-                    <ForgotPasswordForm></ForgotPasswordForm>
+                    <ForgotPasswordForm />
                 </Grid>
             </Container>
         </PageWrapper>

@@ -10,7 +10,7 @@ export const LoginPage: React.FC = () => {
         <PageWrapper pageClass={loginPageCSS.root} defaultWrap={false}>
             <Container maxWidth="lg" className={loginPageCSS.container}>
                 <Grid className={loginPageCSS.grid}>
-                    <LoginForm></LoginForm>
+                    <LoginForm />
                 </Grid>
             </Container>
         </PageWrapper>

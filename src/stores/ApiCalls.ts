@@ -1,5 +1,5 @@
 import { CreateCollectionFormType, UpdateCollectionFormType } from '../types/Collection';
-import { CreateRedirectFormType, UpdateRedirectFormType } from '../types/Redirect';
+import { CreateRedirectFormType, RedirectType, UpdateRedirectFormType } from '../types/Redirect';
 import { ResponseDataType } from '../types/Response';
 import { RegisterFormType, LoginFormType, ChangePasswordFormType, LogoutFormType, UserChangePasswordFormType, ForgotPasswordFormType } from '../types/User';
 
@@ -9,6 +9,7 @@ export interface ApiCalls {
     login: (arg: LoginFormType) => Promise<ResponseDataType>;
     forgotPassword: (arg: ForgotPasswordFormType) => Promise<ResponseDataType>;
     changePassword: (arg: ChangePasswordFormType) => Promise<ResponseDataType>;
+    readUserRedirects: () => Promise<RedirectType[]>;
     //User Calls
     logout: (arg: LogoutFormType) => Promise<ResponseDataType>;
     userChangePassword: (arg: UserChangePasswordFormType) => Promise<ResponseDataType>;

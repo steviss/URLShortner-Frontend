@@ -20,6 +20,13 @@ import { submitButtonStyle } from './objects/submitButton';
 import { changePasswordFormStyle } from './components/changePasswordForm';
 import { forgotPasswordFormStyle } from './components/forgotPasswordForm';
 import { cookieConsentStyle } from './components/cookieConsent';
+import { dashboardPageStyle } from './pages/dashboardPage';
+import { perRedirectChartStyle } from './components/perRedirectChart';
+import { totalClickPieStyle } from './components/totalClickPie';
+import { redirectTableStyle } from './components/redirectTable';
+import { notificationBarStyle } from './components/notificationBar';
+import { notificationStyle } from './objects/notification';
+import { dialogStyle } from './modal/dialog';
 
 export {
     theme,
@@ -44,4 +51,11 @@ export {
     changePasswordFormStyle,
     forgotPasswordFormStyle,
     cookieConsentStyle,
+    dashboardPageStyle,
+    perRedirectChartStyle,
+    totalClickPieStyle,
+    redirectTableStyle,
+    notificationBarStyle,
+    notificationStyle,
+    dialogStyle,
 };

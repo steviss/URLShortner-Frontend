@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Paper, Typography } from '@material-ui/core';
+import { Divider, Paper, Typography, Slide } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { InputField } from '@objects';
 import { changePasswordFormStyle } from '@styles';
@@ -10,7 +10,7 @@ import { useStore } from '@stores';
 import { sleep } from '@utility/sleep';
 import { SubmitButton } from '@objects';
 import { observer } from 'mobx-react';
-//import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const validationSchema = Yup.object().shape({
     token: Yup.string().required('No token provided').min(36),
@@ -27,38 +27,46 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = observer(({
     const {
         apiStore: { changePassword },
     } = useStore();
-    //const history = useHistory();
+    const history = useHistory();
     return (
-        <Paper square className={changePasswordFormCSS.formPaper}>
-            <Formik
-                initialValues={initialValues}
-                onSubmit={async (values, { setSubmitting }) => {
-                    setSubmitting(true);
-                    await sleep(2000);
-                    await changePassword(values);
-                    //history.push('/dashboard');
-                    setSubmitting(false);
-                }}
-                validationSchema={validationSchema}
-            >
-                {({ submitForm, isSubmitting }) => (
-                    <Form className={changePasswordFormCSS.form}>
-                        <Typography variant="h2" align="center" className={changePasswordFormCSS.heading}>
-                            Change Password
-                        </Typography>
-                        <InputField customContainerClass={changePasswordFormCSS.textFields} id="password" type="password" label="New Password" variant="outlined" placeholder="Enter New Password" />
-                        <SubmitButton
-                            customClass={changePasswordFormCSS.submitButton}
-                            type="submit"
-                            isSubmitting={isSubmitting}
-                            onClick={submitForm}
-                            endIcon={<RotateLeftIcon />}
-                            label="Change Password"
-                        />
-                    </Form>
-                )}
-            </Formik>
-            <Divider />
-        </Paper>
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+            <Paper square className={changePasswordFormCSS.formPaper}>
+                <Formik
+                    initialValues={initialValues}
+                    onSubmit={async (values, { setSubmitting }) => {
+                        setSubmitting(true);
+                        await sleep(2000);
+                        await changePassword(values).then(() => history.push('/dashboard'));
+                        setSubmitting(false);
+                    }}
+                    validationSchema={validationSchema}
+                >
+                    {({ submitForm, isSubmitting }) => (
+                        <Form className={changePasswordFormCSS.form}>
+                            <Typography variant="h2" align="center" className={changePasswordFormCSS.heading}>
+                                Change Password
+                            </Typography>
+                            <InputField
+                                customContainerClass={changePasswordFormCSS.textFields}
+                                id="password"
+                                type="password"
+                                label="New Password"
+                                variant="outlined"
+                                placeholder="Enter New Password"
+                            />
+                            <SubmitButton
+                                customClass={changePasswordFormCSS.submitButton}
+                                type="submit"
+                                isSubmitting={isSubmitting}
+                                onClick={submitForm}
+                                endIcon={<RotateLeftIcon />}
+                                label="Change Password"
+                            />
+                        </Form>
+                    )}
+                </Formik>
+                <Divider />
+            </Paper>
+        </Slide>
     );
 });

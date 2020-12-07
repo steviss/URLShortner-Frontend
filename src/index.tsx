@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { CssBaseline, ThemeProvider, withStyles } from '@material-ui/core';
 import { StoreProvider } from '@stores';
 import { theme } from '@styles';
+import { NotificationBar } from '@layout';
 const GlobalCss = withStyles({
     // @global is handled by jss-plugin-global.
     '@global': {
@@ -22,6 +23,7 @@ ReactDOM.render(
                 <CssBaseline />
                 <GlobalCss />
                 <App />
+                <NotificationBar />
             </ThemeProvider>
         </StoreProvider>
     </React.StrictMode>,

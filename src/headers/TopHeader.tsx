@@ -8,12 +8,13 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useStore } from '@stores';
 import { useHistory } from 'react-router-dom';
 import { buttonStyle, topHeaderStyle } from '@styles';
+import { UserPermissions } from '../types/User';
 
 export const TopHeader: React.FC = observer(() => {
     const topHeaderCSS = topHeaderStyle();
     const {
         layoutStore: { toggleMenuDrawerState, toggleUserDrawerState },
-        userStore: { userLoggedIn },
+        userStore: { userPermissions },
     } = useStore();
     const history = useHistory();
     const buttonObjectCSS = buttonStyle();
@@ -26,7 +27,7 @@ export const TopHeader: React.FC = observer(() => {
                 <Typography variant="h4" className={topHeaderCSS.logo}>
                     {config.__APP_NAME__}
                 </Typography>
-                {userLoggedIn ? (
+                {userPermissions > UserPermissions.Guest ? (
                     <IconButton edge="start" className={topHeaderCSS.userButton} color="inherit" aria-label="menu" onClick={toggleUserDrawerState}>
                         <AccountCircleIcon />
                     </IconButton>
