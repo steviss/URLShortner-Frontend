@@ -22,3 +22,8 @@ export interface UpdateRedirectFormType {
     id: string;
     slug: string;
 }
+
+export interface DeleteRedirectFormType {
+    confirm: boolean;
+    id: string;
+}

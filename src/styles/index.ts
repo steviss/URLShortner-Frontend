@@ -27,6 +27,10 @@ import { redirectTableStyle } from './components/redirectTable';
 import { notificationBarStyle } from './components/notificationBar';
 import { notificationStyle } from './objects/notification';
 import { dialogStyle } from './modal/dialog';
+import { addRedirectModalStyle } from './modal/addRedirectModal';
+import { deleteRedirectModalStyle } from './modal/deleteRedirectModal';
+import { qrCodeRedirectModalStyle } from './modal/qrCodeRedirectModal';
+import { linkStyle } from './objects/link';
 
 export {
     theme,
@@ -58,4 +62,8 @@ export {
     notificationBarStyle,
     notificationStyle,
     dialogStyle,
+    deleteRedirectModalStyle,
+    addRedirectModalStyle,
+    qrCodeRedirectModalStyle,
+    linkStyle,
 };

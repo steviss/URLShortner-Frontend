@@ -1,14 +1,15 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { config } from '@utility/config';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useStore } from '@stores';
 import { useHistory } from 'react-router-dom';
-import { buttonStyle, topHeaderStyle } from '@styles';
+import { topHeaderStyle } from '@styles';
 import { UserPermissions } from '../types/User';
+import { CustomButton } from '@objects';
 
 export const TopHeader: React.FC = observer(() => {
     const topHeaderCSS = topHeaderStyle();
@@ -17,7 +18,6 @@ export const TopHeader: React.FC = observer(() => {
         userStore: { userPermissions },
     } = useStore();
     const history = useHistory();
-    const buttonObjectCSS = buttonStyle();
     return (
         <AppBar position="sticky" className={topHeaderCSS.topBar}>
             <Toolbar className={topHeaderCSS.root}>
@@ -32,15 +32,13 @@ export const TopHeader: React.FC = observer(() => {
                         <AccountCircleIcon />
                     </IconButton>
                 ) : (
-                    <Button
-                        className={buttonObjectCSS.root}
+                    <CustomButton
+                        label="Login"
                         onClick={() => {
                             history.push('/login');
                         }}
-                        endIcon={<LockOpenIcon className={buttonObjectCSS.icon} />}
-                    >
-                        <Typography className={buttonObjectCSS.label}>Login</Typography>
-                    </Button>
+                        endIcon={<LockOpenIcon />}
+                    />
                 )}
             </Toolbar>
         </AppBar>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,10 +7,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Grid, Zoom } from '@material-ui/core';
+import { Grid, IconButton, Zoom } from '@material-ui/core';
 import { redirectTableStyle } from '@styles';
 import { useStore } from '@stores';
 import { observer } from 'mobx-react';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { DeleteRedirectModal, QrCodeRedirectModal } from '@modal';
+import CropFreeIcon from '@material-ui/icons/CropFree';
+import { DeleteModalInitType } from 'modal/DashboardPage/DeleteRedirectModal';
 
 const useStyles = makeStyles({
     table: {
@@ -21,6 +25,8 @@ const useStyles = makeStyles({
 export const RedirectTable: React.FC = observer(() => {
     const classes = useStyles();
     const redirectTableCSS = redirectTableStyle();
+    let [deleteId, setDeleteId] = useState<DeleteModalInitType | null>(null);
+    let [qrcodeUrl, setQrCode] = useState<string | null>(null);
     const {
         redirectStore: { items },
     } = useStore();
@@ -36,6 +42,7 @@ export const RedirectTable: React.FC = observer(() => {
                                 <TableCell align="right">Created</TableCell>
                                 <TableCell align="right">Last Clicked</TableCell>
                                 <TableCell align="right">Total</TableCell>
+                                <TableCell align="center">Action</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -45,12 +52,22 @@ export const RedirectTable: React.FC = observer(() => {
                                         {row.url}
                                     </TableCell>
                                     <TableCell align="right">{row.slug}</TableCell>
-                                    <TableCell align="right">{row.createdAt}</TableCell>
-                                    <TableCell align="right">{row.clicks[0].createdAt}</TableCell>
-                                    <TableCell align="right">{row.clicks.length}</TableCell>
+                                    <TableCell align="right">{row.createdAt || 'Now.'}</TableCell>
+                                    <TableCell align="right">{row.clicks.length > 0 ? row.clicks[0].createdAt : 'None.'}</TableCell>
+                                    <TableCell align="right">{row.clicks.length || 'None.'}</TableCell>
+                                    <TableCell align="center">
+                                        <IconButton aria-label="qrcode" onClick={() => setQrCode(row.slug)}>
+                                            <CropFreeIcon />
+                                        </IconButton>
+                                        <IconButton aria-label="delete" onClick={() => setDeleteId({ name: row.slug, url: row.url, clicks: row.clicks.length, id: row.id })}>
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
+                        <DeleteRedirectModal redirect={deleteId} open={!!deleteId} handleClose={() => setDeleteId(null)} />
+                        <QrCodeRedirectModal url={qrcodeUrl} open={!!qrcodeUrl} handleClose={() => setQrCode(null)} />
                     </Table>
                 </TableContainer>
             </Grid>

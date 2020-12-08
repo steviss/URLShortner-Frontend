@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, Paper, Typography, Zoom } from '@material-ui/core';
+import { Box, Divider, Grid, Paper, Typography, useMediaQuery, useTheme, Zoom } from '@material-ui/core';
 import { ResponsivePie } from '@nivo/pie';
 import { useStore } from '@stores';
 import { totalClickPieStyle } from '@styles';
@@ -35,6 +35,8 @@ interface DataType {
 export const TotalClicksPie = observer(() => {
     const pieChartCSS = totalClickPieStyle();
     const [totalClicks, setTotalClicks] = useState<number>(0);
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.up('sm'));
     const {
         redirectStore: { items },
     } = useStore();
@@ -66,6 +68,9 @@ export const TotalClicksPie = observer(() => {
             currentClicks = currentClicks + item.clicks.length;
         });
         setTotalClicks(currentClicks);
+        return () => {
+            setTotalClicks(0);
+        };
     }, [items]);
     return (
         <Zoom in={items.length > 0}>
@@ -79,6 +84,7 @@ export const TotalClicksPie = observer(() => {
                     <Divider />
                     {items.length > 0 ? (
                         <ResponsivePie
+                            enableRadialLabels={matches}
                             data={generateData()}
                             margin={{ top: 60, right: 80, bottom: 100, left: 80 }}
                             innerRadius={0.5}

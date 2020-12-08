@@ -36,8 +36,10 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = observer(({
                     onSubmit={async (values, { setSubmitting }) => {
                         setSubmitting(true);
                         await sleep(2000);
-                        await changePassword(values).then(() => history.push('/dashboard'));
-                        setSubmitting(false);
+                        await changePassword(values).then(() => {
+                            setSubmitting(false);
+                            history.push('/dashboard');
+                        });
                     }}
                     validationSchema={validationSchema}
                 >

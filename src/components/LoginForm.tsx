@@ -33,8 +33,10 @@ export const LoginForm: React.FC = observer(() => {
                     onSubmit={async (values, { setSubmitting }) => {
                         setSubmitting(true);
                         await sleep(2000);
-                        await login(values).then(() => history.push('/dashboard'));
-                        setSubmitting(false);
+                        await login(values).then(() => {
+                            setSubmitting(false);
+                            history.push('/dashboard');
+                        });
                     }}
                     validationSchema={validationSchema}
                 >

@@ -3,8 +3,9 @@ import { UserType, UserPermissions } from '../types/User';
 import { ApiCalls } from './ApiCalls';
 import BaseStore from './BaseStore';
 import userRedirects from '../mockData/redirects.json';
-import { RedirectType } from '../types/Redirect';
+import { CreateRedirectFormType, RedirectType } from '../types/Redirect';
 import { ClickType } from '../types/Click';
+import { v4 } from 'uuid';
 
 export class MockStore extends BaseStore implements ApiCalls {
     mockUser: UserType = { id: '2e8e9194-ae43-41c4-b05b-bace482ae8da', email: 'test@test.com' };
@@ -48,14 +49,13 @@ export class MockStore extends BaseStore implements ApiCalls {
         }
     };
     //Redirect Api Calls
-    createRedirect = () => {
-        return Promise.resolve<ResponseDataType>({ status: 'success', message: 'Succesfully created a Redirect!' });
+    createRedirect = (arg: CreateRedirectFormType) => {
+        return Promise.resolve<ResponseDataType>({ status: 'success', message: 'Succesfully created a Redirect!', data: { id: v4(), slug: arg.slug, url: arg.url, clicks: [] as ClickType[] } });
     };
     readRedirect = () => {
         return Promise.resolve<ResponseDataType>({ status: 'success', message: 'Succesfully read a Redirect!' });
     };
     readUserRedirects = () => {
-        console.log('this baby fired');
         this.rootStore.notificationStore.createNotification('success', 'Succesfully retrieved all user redirects.');
         return Promise.resolve<RedirectType[]>(this.mockRedirects);
     };
@@ -63,6 +63,7 @@ export class MockStore extends BaseStore implements ApiCalls {
         return Promise.resolve<ResponseDataType>({ status: 'success', message: 'Succesfully updated a Redirect!' });
     };
     deleteRedirect = () => {
+        this.rootStore.notificationStore.createNotification('success', 'Succesfully deleted a redirect.');
         return Promise.resolve<ResponseDataType>({ status: 'success', message: 'Succesfully deleted a Redirect!' });
     };
     //Collection Api Calls

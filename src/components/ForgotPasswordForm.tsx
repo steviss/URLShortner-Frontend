@@ -10,7 +10,6 @@ import { sleep } from '@utility/sleep';
 import { SubmitButton } from '@objects';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { observer } from 'mobx-react';
-import { useHistory } from 'react-router-dom';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
@@ -21,8 +20,8 @@ export const ForgotPasswordForm: React.FC = observer(() => {
     const initialValues: ForgotPasswordFormType = { email: '' };
     const {
         apiStore: { forgotPassword },
+        notificationStore: { createNotification },
     } = useStore();
-    const history = useHistory();
     return (
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
             <Paper square className={forgotPasswordFormCSS.formPaper}>
@@ -31,7 +30,9 @@ export const ForgotPasswordForm: React.FC = observer(() => {
                     onSubmit={async (values, { setSubmitting }) => {
                         setSubmitting(true);
                         await sleep(2000);
-                        await forgotPassword(values).then(() => history.push('/dashboard'));
+                        await forgotPassword(values).then((response) => {
+                            createNotification('success', response.message || '');
+                        });
                         setSubmitting(false);
                     }}
                     validationSchema={validationSchema}

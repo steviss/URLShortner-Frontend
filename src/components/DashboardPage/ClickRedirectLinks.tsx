@@ -1,7 +1,7 @@
-import { Grid, Paper, Zoom } from '@material-ui/core';
+import { Grid, Paper, Zoom, useTheme, useMediaQuery } from '@material-ui/core';
 import { ResponsiveBar } from '@nivo/bar';
 import { useStore } from '@stores';
-import { perRedirectChartStyle, theme } from '@styles';
+import { perRedirectChartStyle } from '@styles';
 import stringToColor from '@utility/randomColor';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -13,6 +13,8 @@ import React from 'react';
 
 export const ClickRedirectLinks = observer(() => {
     const redirectChartCSS = perRedirectChartStyle();
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.up('sm'));
     const {
         redirectStore: { items },
     } = useStore();
@@ -36,7 +38,7 @@ export const ClickRedirectLinks = observer(() => {
                         data={generateData()}
                         keys={['clicks']}
                         indexBy="url"
-                        margin={{ top: 60, right: 140, bottom: 60, left: 60 }}
+                        margin={{ top: 60, right: 20, bottom: 60, left: 60 }}
                         padding={0.4}
                         valueScale={{ type: 'linear' }}
                         indexScale={{ type: 'band', round: true }}
@@ -65,14 +67,18 @@ export const ClickRedirectLinks = observer(() => {
                         borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
                         axisTop={null}
                         axisRight={null}
-                        axisBottom={{
-                            tickSize: 5,
-                            tickPadding: 5,
-                            tickRotation: 0,
-                            legend: 'url',
-                            legendPosition: 'middle',
-                            legendOffset: 32,
-                        }}
+                        axisBottom={
+                            matches
+                                ? {
+                                      tickSize: 5,
+                                      tickPadding: 5,
+                                      tickRotation: 0,
+                                      legend: 'url',
+                                      legendPosition: 'middle',
+                                      legendOffset: 32,
+                                  }
+                                : null
+                        }
                         axisLeft={{
                             tickSize: 5,
                             tickPadding: 5,
@@ -84,30 +90,6 @@ export const ClickRedirectLinks = observer(() => {
                         labelSkipWidth={12}
                         labelSkipHeight={12}
                         labelTextColor={{ from: 'color', modifiers: [['brighter', 1.6]] }}
-                        legends={[
-                            {
-                                dataFrom: 'keys',
-                                anchor: 'bottom-right',
-                                direction: 'column',
-                                justify: false,
-                                translateX: 120,
-                                translateY: 0,
-                                itemsSpacing: 2,
-                                itemWidth: 100,
-                                itemHeight: 20,
-                                itemDirection: 'left-to-right',
-                                itemOpacity: 0.85,
-                                symbolSize: 20,
-                                effects: [
-                                    {
-                                        on: 'hover',
-                                        style: {
-                                            itemOpacity: 1,
-                                        },
-                                    },
-                                ],
-                            },
-                        ]}
                         motionStiffness={90}
                         motionDamping={15}
                     />

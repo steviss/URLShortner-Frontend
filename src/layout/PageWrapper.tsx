@@ -21,6 +21,9 @@ export const PageWrapper: React.FC<PageWrapperProps> = observer(({ children, pag
         } else {
             clearPageWrapperClass();
         }
+        return () => {
+            clearPageWrapperClass();
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageClass]);
     return (

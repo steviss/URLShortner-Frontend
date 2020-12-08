@@ -1,8 +1,12 @@
 import { makeStyles } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 
-export const buttonStyle = makeStyles((theme) => ({
+export const linkStyle = makeStyles((theme) => ({
     root: {
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.primary.light} 90%)`,
         border: 0,
         borderRadius: '2px',
@@ -13,6 +17,7 @@ export const buttonStyle = makeStyles((theme) => ({
         padding: '0 1.5rem',
         willChange: 'color, background, boxShadow',
         transition: 'color 0.4s ease-in-out, background 0.4s ease-in-out, boxShadow 0.4s ease-in-out',
+        cursor: 'pointer',
         '&:disabled': {
             background: `linear-gradient(45deg, ${grey[500]} 30%, ${grey[400]} 90%)`,
             boxShadow: `0 1px 1px 1px ${grey[600]}`,
@@ -23,6 +28,7 @@ export const buttonStyle = makeStyles((theme) => ({
             padding: '0 1.5rem',
         },
         '&:hover': {
+            textDecoration: 'none',
             boxShadow: '0 2px 4px 3px rgba(255, 105, 135, .3)',
             '&::before': { opacity: 1 },
         },
@@ -40,6 +46,13 @@ export const buttonStyle = makeStyles((theme) => ({
             zIndex: 5,
         },
         '& .MuiButton-label': {
+            position: 'relative',
+            zIndex: 10,
+        },
+        '& .MuiSvgIcon-root': {
+            margin: '0 0.5rem',
+        },
+        '& > *': {
             position: 'relative',
             zIndex: 10,
         },

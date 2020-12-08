@@ -33,8 +33,10 @@ export const RegisterForm: React.FC = observer(() => {
                     onSubmit={async (values, { setSubmitting }) => {
                         setSubmitting(true);
                         await sleep(2000);
-                        await register(values).then(() => history.push('/dashboard'));
-                        setSubmitting(false);
+                        await register(values).then(() => {
+                            setSubmitting(false);
+                            history.push('/dashboard');
+                        });
                     }}
                     validationSchema={validationSchema}
                 >
