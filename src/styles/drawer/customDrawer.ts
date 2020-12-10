@@ -10,6 +10,15 @@ export const customDrawerStyle = makeStyles((theme) => ({
         justifyContent: 'space-around',
         borderBottom: `1px solid ${grey[300]}`,
     },
+    userHeader: {
+        display: 'flex',
+        flexDirection: 'row',
+        padding: '0 1rem',
+        minHeight: '4rem',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        borderBottom: `1px solid ${grey[300]}`,
+    },
     h6: {
         fontSize: '1rem',
         color: grey[800],

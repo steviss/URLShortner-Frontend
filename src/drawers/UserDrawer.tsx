@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Drawer, IconButton, Typography, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Drawer, IconButton, Typography, ListItem, ListItemIcon, ListItemText, Tooltip } from '@material-ui/core';
 import { useStore } from '@stores';
 import { drawerStyle, customDrawerStyle } from '@styles';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -8,10 +8,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import { userFooterRoutesArray, userMenuRoutesArray } from '@routes';
 import { DrawerMenu } from './DrawerMenu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { useHistory } from 'react-router-dom';
 
 export const UserDrawer: React.FC = observer(() => {
-    const history = useHistory();
     const {
         layoutStore: { userDrawerState, toggleUserDrawerState },
         apiStore: { logout },
@@ -23,10 +21,12 @@ export const UserDrawer: React.FC = observer(() => {
     const userDrawerCSS = customDrawerStyle();
     return (
         <Drawer anchor="right" classes={drawerCSS} open={userDrawerState} ModalProps={{ onBackdropClick: toggleUserDrawerState }}>
-            <header className={userDrawerCSS.header}>
-                <AccountCircleIcon />
+            <header className={userDrawerCSS.userHeader}>
+                <Tooltip title={email} aria-label="user email" style={{ cursor: 'help' }}>
+                    <AccountCircleIcon />
+                </Tooltip>
                 <Typography variant="h6" className={userDrawerCSS.h6}>
-                    {email}
+                    User Menu
                 </Typography>
                 <IconButton size="small" onClick={toggleUserDrawerState}>
                     <CloseIcon fontSize="small" />
@@ -38,8 +38,9 @@ export const UserDrawer: React.FC = observer(() => {
                     button
                     onClick={() =>
                         logout({ logout: true }).then(() => {
-                            history.push('/');
                             toggleUserDrawerState();
+                            // eslint-disable-next-line no-restricted-globals
+                            location.reload();
                         })
                     }
                 >

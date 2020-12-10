@@ -13,6 +13,16 @@ export interface RedirectType {
     //updatedAt: string;
 }
 
+export interface ClaimRedirectType {
+    claimKey: string;
+    id: string;
+}
+
+export interface RedirectResponse {
+    redirects: RedirectType[];
+    hasMore: boolean;
+}
+
 export interface CreateRedirectFormType {
     url: string;
     slug: string;
@@ -26,4 +36,9 @@ export interface UpdateRedirectFormType {
 export interface DeleteRedirectFormType {
     confirm: boolean;
     id: string;
+}
+
+export interface ClaimRedirectFormType {
+    id: string;
+    claimKey: string;
 }

@@ -2,11 +2,13 @@ import { makeStyles } from '@material-ui/core';
 
 export const notificationStyle = makeStyles((theme) => ({
     root: {
+        flex: 1,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
     },
     message: {
+        flex: 1,
         padding: '0.5rem 1rem',
     },
     icon: {
@@ -28,6 +30,7 @@ export const notificationStyle = makeStyles((theme) => ({
         color: theme.palette.info.dark,
     },
     buttonClose: {
+        marginLeft: 'auto',
         color: theme.palette.primary.light,
     },
 }));

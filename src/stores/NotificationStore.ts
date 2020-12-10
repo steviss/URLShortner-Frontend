@@ -2,12 +2,12 @@ import BaseStore from './BaseStore';
 import { RootStore } from './RootStore';
 import { action, makeObservable, observable } from 'mobx';
 
-type NotificationType = 'success' | 'info' | 'warning' | 'error';
+export type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 export class NotificationStore extends BaseStore {
     open: boolean = false;
     type: NotificationType = 'info';
-    duration: number = 3000;
+    duration: number = 2000;
     message: string = '';
     constructor(rootStore: RootStore) {
         super(rootStore);

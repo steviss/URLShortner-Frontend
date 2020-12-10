@@ -16,6 +16,7 @@
             "@utility/*": ["./utility/*"],
             "@stores": ["./stores/index.tsx"],
             "@styles": ["./styles/index.ts"],
+            "@skeletons": ["./skeletons/index.tsx"],
             "@drawers": ["./drawers/index.tsx"],
             "@graphql": ["./generated/graphql.tsx"]
         }

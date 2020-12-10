@@ -7,7 +7,6 @@ import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import { ChangePasswordFormType } from '../types/User';
 import * as Yup from 'yup';
 import { useStore } from '@stores';
-import { sleep } from '@utility/sleep';
 import { SubmitButton } from '@objects';
 import { observer } from 'mobx-react';
 import { useHistory } from 'react-router-dom';
@@ -35,7 +34,6 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = observer(({
                     initialValues={initialValues}
                     onSubmit={async (values, { setSubmitting }) => {
                         setSubmitting(true);
-                        await sleep(2000);
                         await changePassword(values).then(() => {
                             setSubmitting(false);
                             history.push('/dashboard');
@@ -56,14 +54,7 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = observer(({
                                 variant="outlined"
                                 placeholder="Enter New Password"
                             />
-                            <SubmitButton
-                                customClass={changePasswordFormCSS.submitButton}
-                                type="submit"
-                                isSubmitting={isSubmitting}
-                                onClick={submitForm}
-                                endIcon={<RotateLeftIcon />}
-                                label="Change Password"
-                            />
+                            <SubmitButton customClass={changePasswordFormCSS.submitButton} type="submit" isSubmitting={isSubmitting} endIcon={<RotateLeftIcon />} label="Change Password" />
                         </Form>
                     )}
                 </Formik>

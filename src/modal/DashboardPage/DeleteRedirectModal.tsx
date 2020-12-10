@@ -22,22 +22,22 @@ const validationSchema = Yup.object({
 });
 export interface DeleteModalInitType {
     id: string;
-    name: string;
+    slug: string;
     url: string;
     clicks: number;
 }
 export const DeleteRedirectModal: React.FC<FormModalProps> = observer(({ open, handleClose, redirect }) => {
     const dialogCSS = dialogStyle();
     const deleteRedirectModalCSS = deleteRedirectModalStyle();
-    const { id: redirectId, name, url, clicks } = redirect || { id: '', name: '', url: '', clicks: 0 };
-    let id = 'DeleteRedirectModal';
+    const { id, slug, url, clicks } = redirect || { id: '', slug: '', url: '', clicks: 0 };
+    let modalId = 'Delete Redirect Modal';
     const {
         redirectStore: { deleteRedirect },
     } = useStore();
     return (
-        <Dialog disableEnforceFocus open={open} onClose={handleClose} aria-labelledby={id} classes={dialogCSS}>
+        <Dialog disableEnforceFocus open={open} onClose={handleClose} aria-labelledby={modalId} classes={dialogCSS}>
             <Formik
-                initialValues={{ id: redirectId }}
+                initialValues={{ id: id }}
                 onSubmit={async (values, { setSubmitting }) => {
                     setSubmitting(true);
                     await deleteRedirect(values.id);
@@ -48,7 +48,7 @@ export const DeleteRedirectModal: React.FC<FormModalProps> = observer(({ open, h
             >
                 {({ submitForm, isSubmitting }) => (
                     <Form>
-                        <DialogTitle id={id} className={deleteRedirectModalCSS.dialogHeader}>
+                        <DialogTitle className={deleteRedirectModalCSS.dialogHeader}>
                             <Typography variant="h2" component="span" className={deleteRedirectModalCSS.heading}>
                                 Delete Redirect
                             </Typography>
@@ -64,7 +64,7 @@ export const DeleteRedirectModal: React.FC<FormModalProps> = observer(({ open, h
                                             <DnsIcon />
                                         </Avatar>
                                     </ListItemAvatar>
-                                    <ListItemText primary="Slug" secondary={name || 'none'} />
+                                    <ListItemText primary="Slug" secondary={slug || 'none'} />
                                 </ListItem>
                                 <ListItem>
                                     <ListItemAvatar>
@@ -88,7 +88,7 @@ export const DeleteRedirectModal: React.FC<FormModalProps> = observer(({ open, h
                             <Button onClick={handleClose} className={deleteRedirectModalCSS.dialogCancel}>
                                 Cancel
                             </Button>
-                            <SubmitButton customClass={deleteRedirectModalCSS.dialogSave} type="submit" isSubmitting={isSubmitting} onClick={submitForm} endIcon={<DeleteIcon />} label="Delete" />
+                            <SubmitButton customClass={deleteRedirectModalCSS.dialogSave} type="submit" isSubmitting={isSubmitting} endIcon={<DeleteIcon />} label="Delete" />
                         </DialogActions>
                     </Form>
                 )}

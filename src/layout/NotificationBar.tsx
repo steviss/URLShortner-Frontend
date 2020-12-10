@@ -41,11 +41,21 @@ export const NotificationBar: React.FC = observer(() => {
                 <Typography variant="body1" component="span" className={notificationCSS.message}>
                     {message}
                 </Typography>
-                <IconButton className={notificationCSS.buttonClose} size="small" onClick={() => closeNotification()}>
-                    <CloseIcon fontSize="small" />
-                </IconButton>
             </Box>
         );
     };
-    return <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={duration} open={open} onClose={close} message={notifcationBody()} />;
+    return (
+        <Snackbar
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            autoHideDuration={duration}
+            open={open}
+            onClose={close}
+            message={notifcationBody()}
+            action={
+                <IconButton className={notificationCSS.buttonClose} size="small" onClick={() => closeNotification()}>
+                    <CloseIcon fontSize="small" />
+                </IconButton>
+            }
+        />
+    );
 });

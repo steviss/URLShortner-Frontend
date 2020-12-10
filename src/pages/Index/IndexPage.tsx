@@ -3,7 +3,7 @@ import Particles from 'react-particles-js';
 import { PageWrapper, PageHeader } from '@layout';
 import { indexPageStyle } from '@styles';
 import { Box, Container, Grid, Grow, Paper, Typography, Fade } from '@material-ui/core';
-import { FeatureItemCard, ShortenForm } from '@components';
+import { FeatureItemCard, ShortenForm, UnclaimedRedirects } from '@components';
 import { config } from '@utility/config';
 import { ReactComponent as HrefSVG } from '@assets/images/href.svg';
 import { ReactComponent as PlanningSVG } from '@assets/images/planning.svg';
@@ -55,7 +55,7 @@ export const IndexPage: React.FC = () => {
                         },
                     }}
                 />
-                <Grow in={true}>
+                <Grow in={true} unmountOnExit mountOnEnter>
                     <Box className={indexPageCSS.cover}>
                         <Container maxWidth="lg" className={indexPageCSS.coverContainer}>
                             <Grid className={indexPageCSS.grid} container>
@@ -68,7 +68,8 @@ export const IndexPage: React.FC = () => {
                 </Grow>
             </PageHeader>
             <PageWrapper>
-                <Fade in={true}>
+                <UnclaimedRedirects />
+                <Fade in={true} unmountOnExit mountOnEnter>
                     <Paper className={indexPageCSS.landingPaper} square>
                         <Box className={indexPageCSS.landingMessage}>
                             <Typography variant="h1" align="center" className={indexPageCSS.landingHeading}>

@@ -27,6 +27,7 @@ export class UserStore extends BaseStore {
     checkAuth = async () => {
         try {
             const me = await this.rootStore.apiStore.me();
+            console.log('me response', me);
             if (me.status === 'success') {
                 runInAction(() => {
                     this.setUser(me.data as UserType);
@@ -39,11 +40,21 @@ export class UserStore extends BaseStore {
                 });
             }
         } catch (e) {
-            throw e;
+            this.rootStore.notificationStore.createNotification('error', e);
         }
     };
     setUser = (user: UserType) => {
         this.user = user;
+        this.setLoggedIn(UserPermissions.User);
+    };
+    logoutUser = async () => {
+        try {
+            await this.rootStore.apiStore.logout({ logout: true });
+            this.user = {} as UserType;
+            this.setLoggedIn(UserPermissions.User);
+        } catch (e) {
+            this.rootStore.notificationStore.createNotification('error', e);
+        }
     };
     setLoggedIn = (status: UserPermissions) => {
         this.userPermissions = status;

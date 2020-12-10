@@ -4,14 +4,13 @@ import { Form, Formik } from 'formik';
 import { InputField } from '@objects';
 import { loginFormStyle } from '@styles';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
-import { RegisterFormType as LoginFormType } from '../types/User';
+import { LoginFormType, UserType } from '../types/User';
 import * as Yup from 'yup';
 import { useStore } from '@stores';
-import { sleep } from '@utility/sleep';
 import { SubmitButton } from '@objects';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { useHistory } from 'react-router-dom';
+import { toErrorMap } from '@utility/toErrorMap';
 
 const validationSchema = Yup.object().shape({
     password: Yup.string().required('No password provided.').min(8, 'Password is too short - should be 8 chars minimum.'),
@@ -23,6 +22,7 @@ export const LoginForm: React.FC = observer(() => {
     const initialValues: LoginFormType = { email: '', password: '' };
     const {
         apiStore: { login },
+        userStore: { setUser },
     } = useStore();
     const history = useHistory();
     return (
@@ -30,12 +30,15 @@ export const LoginForm: React.FC = observer(() => {
             <Paper square className={loginFormCSS.formPaper}>
                 <Formik
                     initialValues={initialValues}
-                    onSubmit={async (values, { setSubmitting }) => {
+                    onSubmit={async (values, { setSubmitting, setErrors }) => {
                         setSubmitting(true);
-                        await sleep(2000);
-                        await login(values).then(() => {
-                            setSubmitting(false);
-                            history.push('/dashboard');
+                        await login(values).then((response) => {
+                            if (response.errors) {
+                                setErrors(toErrorMap(response.errors));
+                            } else {
+                                setUser(response.data as UserType);
+                                history.push('/dashboard');
+                            }
                         });
                     }}
                     validationSchema={validationSchema}
@@ -54,7 +57,7 @@ export const LoginForm: React.FC = observer(() => {
                                 </Typography>
                             </Box>
                             <InputField customContainerClass={loginFormCSS.textFields} id="password" type="password" label="Password" variant="outlined" placeholder="Enter Password" />
-                            <SubmitButton customClass={loginFormCSS.submitButton} type="submit" isSubmitting={isSubmitting} onClick={submitForm} endIcon={<LockOpenIcon />} label="Login" />
+                            <SubmitButton customClass={loginFormCSS.submitButton} type="submit" isSubmitting={isSubmitting} endIcon={<LockOpenIcon />} label="Login" />
                             <Box className={loginFormCSS.registerInfo}>
                                 <Typography variant="caption" align="center">
                                     You do not have an account?

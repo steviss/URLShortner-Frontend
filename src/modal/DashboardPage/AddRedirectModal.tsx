@@ -25,12 +25,12 @@ const validationSchema = Yup.object({
 export const AddRedirectModal: React.FC<FormModalProps> = observer(({ open, handleClose }) => {
     const dialogCSS = dialogStyle();
     const addRedirectModalCSS = addRedirectModalStyle();
-    let id = 'AddRedirectModal';
+    let modalId = 'Add Redirect Modal';
     const {
         redirectStore: { createRedirect },
     } = useStore();
     return (
-        <Dialog disableEnforceFocus open={open} onClose={handleClose} aria-labelledby={id} classes={dialogCSS}>
+        <Dialog open={open} onClose={handleClose} aria-labelledby={modalId} classes={dialogCSS}>
             <Formik
                 initialValues={{ url: '', slug: '' }}
                 onSubmit={async (values, { setSubmitting }) => {
@@ -43,7 +43,7 @@ export const AddRedirectModal: React.FC<FormModalProps> = observer(({ open, hand
             >
                 {({ submitForm, isSubmitting }) => (
                     <Form>
-                        <DialogTitle id={id} className={addRedirectModalCSS.dialogHeader}>
+                        <DialogTitle className={addRedirectModalCSS.dialogHeader}>
                             <Typography variant="h2" component="span" className={addRedirectModalCSS.heading}>
                                 Create Redirect
                             </Typography>
@@ -59,7 +59,7 @@ export const AddRedirectModal: React.FC<FormModalProps> = observer(({ open, hand
                             <Button onClick={handleClose} className={addRedirectModalCSS.dialogCancel}>
                                 Cancel
                             </Button>
-                            <SubmitButton customClass={addRedirectModalCSS.dialogSave} type="submit" isSubmitting={isSubmitting} onClick={submitForm} endIcon={<AddIcon />} label="Add Redirect" />
+                            <SubmitButton customClass={addRedirectModalCSS.dialogSave} type="submit" isSubmitting={isSubmitting} endIcon={<AddIcon />} label="Add Redirect" />
                         </DialogActions>
                     </Form>
                 )}

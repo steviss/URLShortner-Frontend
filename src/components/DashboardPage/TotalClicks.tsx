@@ -1,15 +1,11 @@
-import { Box, Divider, Grid, Paper, Typography, useMediaQuery, useTheme, Zoom } from '@material-ui/core';
+import { Box, Divider, Grid, Paper, Skeleton, Typography, useMediaQuery, useTheme, Zoom } from '@material-ui/core';
 import { ResponsivePie } from '@nivo/pie';
 import { useStore } from '@stores';
 import { totalClickPieStyle } from '@styles';
 import stringToColor from '@utility/randomColor';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
+import { TCSkeleton } from '@skeletons';
 
 interface LabelType {
     match: {
@@ -73,23 +69,27 @@ export const TotalClicksPie = observer(() => {
         };
     }, [items]);
     return (
-        <Zoom in={items.length > 0}>
+        <Zoom in={true} unmountOnExit mountOnEnter>
             <Grid item xs={12} sm={12} md={6} lg={3} className={pieChartCSS.root}>
                 <Paper square className={pieChartCSS.paper}>
                     <Box component="header" className={pieChartCSS.header}>
-                        <Typography variant="h4" className={pieChartCSS.heading}>
-                            Total clicks: {totalClicks}
-                        </Typography>
+                        {items.length > 0 ? (
+                            <Typography variant="h4" className={pieChartCSS.heading}>
+                                Total clicks: {totalClicks}
+                            </Typography>
+                        ) : (
+                            <Skeleton width="5rem" height="1rem" />
+                        )}
                     </Box>
                     <Divider />
                     {items.length > 0 ? (
                         <ResponsivePie
                             enableRadialLabels={matches}
                             data={generateData()}
-                            margin={{ top: 60, right: 80, bottom: 100, left: 80 }}
+                            margin={{ top: 60, right: 80, bottom: 100, left: 100 }}
                             innerRadius={0.5}
                             colors={{ scheme: 'nivo' }}
-                            borderWidth={1}
+                            borderWidth={2}
                             borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
                             radialLabelsSkipAngle={10}
                             radialLabelsTextColor="#333333"
@@ -118,7 +118,11 @@ export const TotalClicksPie = observer(() => {
                             ]}
                             fill={generateFill()}
                         />
-                    ) : null}
+                    ) : (
+                        <Box className={pieChartCSS.container}>
+                            <TCSkeleton />
+                        </Box>
+                    )}
                 </Paper>
             </Grid>
         </Zoom>

@@ -7,7 +7,6 @@ import ShortTextIcon from '@material-ui/icons/ShortText';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useStore } from '@stores';
-import { sleep } from '@utility/sleep';
 import { CreateRedirectFormType } from '../types/Redirect';
 import { observer } from 'mobx-react';
 
@@ -23,7 +22,7 @@ export const ShortenForm: React.FC = observer(() => {
     const shortenFormCSS = shortenFormStyle();
     const initialValues: CreateRedirectFormType = { url: '', slug: '' };
     const {
-        apiStore: { createRedirect },
+        redirectStore: { createRedirect },
     } = useStore();
     return (
         <Paper square className={shortenFormCSS.formPaper}>
@@ -31,7 +30,6 @@ export const ShortenForm: React.FC = observer(() => {
                 initialValues={initialValues}
                 onSubmit={async (values, { setSubmitting }) => {
                     setSubmitting(true);
-                    await sleep(3000);
                     await createRedirect(values);
                     setSubmitting(false);
                 }}
@@ -47,7 +45,7 @@ export const ShortenForm: React.FC = observer(() => {
                                 </Box>
                             ) : null}
                         </div>
-                        <Button disabled={isSubmitting} className={`${shortenFormCSS.button} ${buttonObjectCSS.root}`} onClick={submitForm} endIcon={<ShortTextIcon />}>
+                        <Button type="submit" disabled={isSubmitting} className={`${shortenFormCSS.button} ${buttonObjectCSS.root}`} endIcon={<ShortTextIcon />}>
                             <Typography className={buttonObjectCSS.label}>Shorten</Typography>
                         </Button>
                     </Form>

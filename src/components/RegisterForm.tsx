@@ -7,7 +7,6 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { RegisterFormType } from '../types/User';
 import * as Yup from 'yup';
 import { useStore } from '@stores';
-import { sleep } from '@utility/sleep';
 import { SubmitButton } from '@objects';
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
@@ -32,7 +31,6 @@ export const RegisterForm: React.FC = observer(() => {
                     initialValues={initialValues}
                     onSubmit={async (values, { setSubmitting }) => {
                         setSubmitting(true);
-                        await sleep(2000);
                         await register(values).then(() => {
                             setSubmitting(false);
                             history.push('/dashboard');
@@ -47,7 +45,7 @@ export const RegisterForm: React.FC = observer(() => {
                             </Typography>
                             <InputField customContainerClass={registerFormCSS.textFields} id="email" label="E-mail" variant="outlined" placeholder="Enter E-mail" />
                             <InputField customContainerClass={registerFormCSS.textFields} id="password" type="password" label="Password" variant="outlined" placeholder="Enter Password" />
-                            <SubmitButton customClass={registerFormCSS.submitButton} type="submit" isSubmitting={isSubmitting} onClick={submitForm} endIcon={<PersonAddIcon />} label="Register" />
+                            <SubmitButton customClass={registerFormCSS.submitButton} type="submit" isSubmitting={isSubmitting} endIcon={<PersonAddIcon />} label="Register" />
                             <Box className={registerFormCSS.registerInfo}>
                                 <Typography variant="caption" align="center">
                                     You already have an account?

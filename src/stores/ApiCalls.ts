@@ -1,27 +1,27 @@
-import { CreateCollectionFormType, UpdateCollectionFormType } from '../types/Collection';
-import { CreateRedirectFormType, RedirectType, UpdateRedirectFormType } from '../types/Redirect';
-import { ResponseDataType } from '../types/Response';
-import { RegisterFormType, LoginFormType, ChangePasswordFormType, LogoutFormType, UserChangePasswordFormType, ForgotPasswordFormType } from '../types/User';
+import { CollectionType, CreateCollectionFormType, UpdateCollectionFormType } from '../types/Collection';
+import { ClaimRedirectFormType, CreateRedirectFormType, RedirectType, UpdateRedirectFormType } from '../types/Redirect';
+import { DeleteResponse, ForgotPasswordResponse, LogoutResponse, PaginatedResponse, ResponseDataType } from '../types/Response';
+import { RegisterFormType, LoginFormType, ChangePasswordFormType, LogoutFormType, ForgotPasswordFormType, UserType } from '../types/User';
 
 export interface ApiCalls {
     //Public Calls
-    register: (arg: RegisterFormType) => Promise<ResponseDataType>;
-    login: (arg: LoginFormType) => Promise<ResponseDataType>;
-    forgotPassword: (arg: ForgotPasswordFormType) => Promise<ResponseDataType>;
-    changePassword: (arg: ChangePasswordFormType) => Promise<ResponseDataType>;
-    readUserRedirects: () => Promise<RedirectType[]>;
+    register: (arg: RegisterFormType) => Promise<ResponseDataType<UserType>>;
+    login: (arg: LoginFormType) => Promise<ResponseDataType<UserType>>;
+    forgotPassword: (arg: ForgotPasswordFormType) => Promise<ResponseDataType<ForgotPasswordResponse>>;
+    changePassword: (arg: ChangePasswordFormType) => Promise<ResponseDataType<UserType>>;
     //User Calls
-    logout: (arg: LogoutFormType) => Promise<ResponseDataType>;
-    userChangePassword: (arg: UserChangePasswordFormType) => Promise<ResponseDataType>;
-    me: () => Promise<ResponseDataType>;
+    logout: (arg: LogoutFormType) => Promise<ResponseDataType<LogoutResponse>>;
+    me: () => Promise<ResponseDataType<UserType>>;
     //Redirect Api Calls
-    createRedirect: (arg: CreateRedirectFormType) => Promise<ResponseDataType>;
-    readRedirect: (id: string) => Promise<ResponseDataType>;
-    updateRedirect: (arg: UpdateRedirectFormType) => Promise<ResponseDataType>;
-    deleteRedirect: (id: string) => Promise<ResponseDataType>;
+    createRedirect: (arg: CreateRedirectFormType) => Promise<ResponseDataType<RedirectType>>;
+    claimRedirect: (arg: ClaimRedirectFormType) => Promise<ResponseDataType<RedirectType>>;
+    readRedirect: (id: string) => Promise<ResponseDataType<RedirectType>>;
+    readUserRedirects: () => Promise<ResponseDataType<PaginatedResponse<RedirectType[]>>>;
+    updateRedirect: (arg: UpdateRedirectFormType) => Promise<ResponseDataType<RedirectType>>;
+    deleteRedirect: (id: string) => Promise<ResponseDataType<DeleteResponse>>;
     //Collection Api Calls
-    createCollection: (arg: CreateCollectionFormType) => Promise<ResponseDataType>;
-    readCollection: (id: string) => Promise<ResponseDataType>;
-    updateCollection: (arg: UpdateCollectionFormType) => Promise<ResponseDataType>;
-    deleteCollection: (id: string) => Promise<ResponseDataType>;
+    createCollection: (arg: CreateCollectionFormType) => Promise<ResponseDataType<CollectionType>>;
+    readCollection: (id: string) => Promise<ResponseDataType<CollectionType>>;
+    updateCollection: (arg: UpdateCollectionFormType) => Promise<ResponseDataType<CollectionType>>;
+    deleteCollection: (id: string) => Promise<ResponseDataType<DeleteResponse>>;
 }

@@ -12,6 +12,12 @@ export const totalClickPieStyle = makeStyles((theme) => ({
         order: 1,
         [theme.breakpoints.up('md')]: { order: 2 },
     },
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: 'calc(25rem - 2.5rem)',
+        maxHeight: 'calc(25rem - 2.5rem)',
+    },
     paper: {
         display: 'flex',
         flexDirection: 'column',

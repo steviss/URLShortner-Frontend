@@ -57,4 +57,31 @@ export const qrCodeRedirectModalStyle = makeStyles((theme) => ({
         fontWeight: 200,
         fontFamily: `'Titillium Web', sans-serif`,
     },
+    urlInfo: {
+        position: 'relative',
+        display: 'flex',
+        padding: '1rem',
+        marginBottom: '1rem',
+        borderRadius: '0.25rem',
+        fontSize: '0.75rem',
+        border: `1px solid ${grey[300]}`,
+    },
+    urlAddress: {
+        display: 'flex',
+        flex: '1',
+    },
+    urlCopyButton: {
+        position: 'absolute',
+        width: '2rem',
+        height: '2rem',
+        top: 0,
+        bottom: 0,
+        right: '0.5rem',
+        margin: 'auto 0',
+        zIndex: 5,
+        backgroundColor: 'white',
+        '&:hover': {
+            backgroundColor: grey[100],
+        },
+    },
 }));

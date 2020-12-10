@@ -15,6 +15,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { DeleteRedirectModal, QrCodeRedirectModal } from '@modal';
 import CropFreeIcon from '@material-ui/icons/CropFree';
 import { DeleteModalInitType } from 'modal/DashboardPage/DeleteRedirectModal';
+import { RTSkeleton } from '@skeletons';
 
 const useStyles = makeStyles({
     table: {
@@ -25,51 +26,68 @@ const useStyles = makeStyles({
 export const RedirectTable: React.FC = observer(() => {
     const classes = useStyles();
     const redirectTableCSS = redirectTableStyle();
-    let [deleteId, setDeleteId] = useState<DeleteModalInitType | null>(null);
-    let [qrcodeUrl, setQrCode] = useState<string | null>(null);
+    let [deleteModal, deleteModalToggle] = useState<boolean>(false);
+    let [deleteRedirect, setDeleteRedirect] = useState<DeleteModalInitType | null>(null);
+    let [qrModal, qrModalToggle] = useState<boolean>(false);
+    let [qrUrl, setQrUrl] = useState<string | null>(null);
     const {
         redirectStore: { items },
     } = useStore();
+    const openQrModal = (url: string) => {
+        qrModalToggle(true);
+        setQrUrl(url);
+    };
+
+    const openDeleteRedirect = (redirect: DeleteModalInitType) => {
+        deleteModalToggle(true);
+        setDeleteRedirect(redirect);
+    };
     return (
-        <Zoom in={items.length > 0}>
+        //dodati dashboard store i paginaciju
+        // povezati tabele i grafikon da rade na 5 komada
+        <Zoom in={true} unmountOnExit mountOnEnter>
             <Grid item xs={12} className={redirectTableCSS.root}>
-                <TableContainer square component={Paper}>
-                    <Table className={classes.table} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>URL</TableCell>
-                                <TableCell align="right">Slug</TableCell>
-                                <TableCell align="right">Created</TableCell>
-                                <TableCell align="right">Last Clicked</TableCell>
-                                <TableCell align="right">Total</TableCell>
-                                <TableCell align="center">Action</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {items.map((row, i) => (
-                                <TableRow key={row.id}>
-                                    <TableCell component="th" scope="row">
-                                        {row.url}
-                                    </TableCell>
-                                    <TableCell align="right">{row.slug}</TableCell>
-                                    <TableCell align="right">{row.createdAt || 'Now.'}</TableCell>
-                                    <TableCell align="right">{row.clicks.length > 0 ? row.clicks[0].createdAt : 'None.'}</TableCell>
-                                    <TableCell align="right">{row.clicks.length || 'None.'}</TableCell>
-                                    <TableCell align="center">
-                                        <IconButton aria-label="qrcode" onClick={() => setQrCode(row.slug)}>
-                                            <CropFreeIcon />
-                                        </IconButton>
-                                        <IconButton aria-label="delete" onClick={() => setDeleteId({ name: row.slug, url: row.url, clicks: row.clicks.length, id: row.id })}>
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </TableCell>
+                {items.length > 0 ? (
+                    <TableContainer square component={Paper}>
+                        <Table className={classes.table} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>URL</TableCell>
+                                    <TableCell align="right">Slug</TableCell>
+                                    <TableCell align="right">Created</TableCell>
+                                    <TableCell align="right">Last Clicked</TableCell>
+                                    <TableCell align="right">Total</TableCell>
+                                    <TableCell align="center">Action</TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                        <DeleteRedirectModal redirect={deleteId} open={!!deleteId} handleClose={() => setDeleteId(null)} />
-                        <QrCodeRedirectModal url={qrcodeUrl} open={!!qrcodeUrl} handleClose={() => setQrCode(null)} />
-                    </Table>
-                </TableContainer>
+                            </TableHead>
+                            <TableBody>
+                                {items.map((row, i) => (
+                                    <TableRow key={row.id}>
+                                        <TableCell component="th" scope="row">
+                                            {row.url}
+                                        </TableCell>
+                                        <TableCell align="right">{row.slug}</TableCell>
+                                        <TableCell align="right">{new Date(row.createdAt).toLocaleString() || 'Now.'}</TableCell>
+                                        <TableCell align="right">{row.clicks.length > 0 ? new Date(row.clicks[0].createdAt).toLocaleString() : 'None.'}</TableCell>
+                                        <TableCell align="right">{row.clicks.length || 'None.'}</TableCell>
+                                        <TableCell align="right">
+                                            <IconButton aria-label="qrcode" onClick={() => openQrModal(row.slug)}>
+                                                <CropFreeIcon />
+                                            </IconButton>
+                                            <IconButton aria-label="delete" onClick={() => openDeleteRedirect({ slug: row.slug, url: row.url, clicks: row.clicks.length, id: row.id })}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                            <DeleteRedirectModal redirect={deleteRedirect} open={deleteModal} handleClose={() => deleteModalToggle(false)} />
+                            <QrCodeRedirectModal url={qrUrl} open={qrModal} handleClose={() => qrModalToggle(false)} />
+                        </Table>
+                    </TableContainer>
+                ) : (
+                    <RTSkeleton />
+                )}
             </Grid>
         </Zoom>
     );

@@ -6,7 +6,6 @@ import { forgotPasswordFormStyle } from '@styles';
 import { ForgotPasswordFormType } from '../types/User';
 import * as Yup from 'yup';
 import { useStore } from '@stores';
-import { sleep } from '@utility/sleep';
 import { SubmitButton } from '@objects';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { observer } from 'mobx-react';
@@ -29,11 +28,9 @@ export const ForgotPasswordForm: React.FC = observer(() => {
                     initialValues={initialValues}
                     onSubmit={async (values, { setSubmitting }) => {
                         setSubmitting(true);
-                        await sleep(2000);
                         await forgotPassword(values).then((response) => {
                             createNotification('success', response.message || '');
                         });
-                        setSubmitting(false);
                     }}
                     validationSchema={validationSchema}
                 >
@@ -43,14 +40,7 @@ export const ForgotPasswordForm: React.FC = observer(() => {
                                 Forgot Password
                             </Typography>
                             <InputField customContainerClass={forgotPasswordFormCSS.textFields} id="email" label="E-mail" variant="outlined" placeholder="Enter E-mail" />
-                            <SubmitButton
-                                customClass={forgotPasswordFormCSS.submitButton}
-                                type="submit"
-                                isSubmitting={isSubmitting}
-                                onClick={submitForm}
-                                endIcon={<LockOpenIcon />}
-                                label="Reset Password"
-                            />
+                            <SubmitButton customClass={forgotPasswordFormCSS.submitButton} type="submit" isSubmitting={isSubmitting} endIcon={<LockOpenIcon />} label="Reset Password" />
                         </Form>
                     )}
                 </Formik>

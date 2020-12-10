@@ -14,7 +14,7 @@ export const FeatureItemCard: React.FC<FeatureItemCardProps> = ({ icon, headline
     const indexPageCSS = indexPageStyle();
     const history = useHistory();
     return (
-        <Grow in={true}>
+        <Grow in={true} unmountOnExit mountOnEnter>
             <Grid item xs={12} md={4} className={indexPageCSS.featureItemContainer}>
                 <Card className={indexPageCSS.featureItem}>
                     <CardContent className={indexPageCSS.featureItemContent}>
