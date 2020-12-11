@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Container, Grid, Typography } from '@material-ui/core';
 import { PageHeader, PageWrapper } from '@layout';
 import { dashboardPageStyle } from '@styles';
-import { RedirectTable, ClickRedirectLinks, TotalClicksPie } from '@components';
+import { ClickRedirectLinks, TotalClicksPie, EnhancedTable } from '@components';
 import { observer } from 'mobx-react';
 import { useStore } from '@stores';
 import AddIcon from '@material-ui/icons/Add';
@@ -39,7 +39,7 @@ export const DashboardPage: React.FC = observer(() => {
                     <Grid container className={dashboardPageCSS.grid}>
                         <ClickRedirectLinks />
                         <TotalClicksPie />
-                        <RedirectTable />
+                        <EnhancedTable />
                     </Grid>
                 </Container>
             </PageWrapper>

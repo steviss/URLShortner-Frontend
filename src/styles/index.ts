@@ -39,6 +39,7 @@ import { tcSkeletonStyle } from './skeletons/TCSkeleton';
 import { unclaimedRedirectsStyle } from './components/unclaimedRedirects';
 import { accountRequiredModalStyle } from './modal/accountRequiredModal';
 import { claimRedirectModalStyle } from './modal/claimRedirectModal';
+import { betterTableToolbarStyles, betterRedirectTableStyle } from './components/betterRedirectTable';
 
 export {
     theme,
@@ -82,4 +83,6 @@ export {
     unclaimedRedirectsStyle,
     accountRequiredModalStyle,
     claimRedirectModalStyle,
+    betterTableToolbarStyles,
+    betterRedirectTableStyle,
 };

@@ -1,7 +1,7 @@
 import BaseStore from './BaseStore';
 import { RootStore } from './RootStore';
 import { makeObservable, observable, action, runInAction } from 'mobx';
-import { ClaimRedirectType, RedirectType } from 'types/Redirect';
+import { ClaimRedirectType, RedirectType } from '../types/Redirect';
 import localforage from 'localforage';
 import { localForageConfig } from '@utility/localForage.config';
 
@@ -75,7 +75,6 @@ export class ClaimStore extends BaseStore {
     getStoredItem = async (id: string) => {
         try {
             let storedItem = await this.storage.getItem(id);
-            console.log('item', storedItem);
             return storedItem as ClaimType;
         } catch (e) {
             console.log('get all error', e);
@@ -84,9 +83,7 @@ export class ClaimStore extends BaseStore {
     addStoredItem = async (item: ClaimType) => {
         try {
             await this.storage.setItem(item.id, item);
-            console.log('before storega', item);
             let storedItem = await this.storage.getItem(item.id);
-            console.log('added item', storedItem);
             return storedItem;
         } catch (e) {
             console.log('get all error', e);
@@ -95,7 +92,6 @@ export class ClaimStore extends BaseStore {
     deleteStoredItem = async (id: string) => {
         try {
             await this.storage.removeItem(id);
-            console.log('deleted item', id);
         } catch (e) {
             console.log('get all error', e);
         }

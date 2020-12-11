@@ -39,13 +39,49 @@ export class NetworkStore extends BaseStore implements ApiCalls {
     //Redirect Api Calls
     claimRedirect = (arg: ClaimRedirectFormType) => this.api.put('api/redirect/claim', arg).then((response) => this.response<RedirectType>(response));
     createRedirect = (arg: CreateRedirectFormType) => this.api.post('api/redirect/create', arg).then((response) => this.response<RedirectType>(response));
-    readRedirect = (id: string) => this.api.get(`api/redirect/read?id=${id}`).then((response) => this.response<RedirectType>(response));
-    readUserRedirects = () => this.api.get('api/redirect/readUserRedirects').then((response) => this.response<PaginatedResponse<RedirectType[]>>(response));
+    readRedirect = (id: string) =>
+        this.api
+            .get(`api/redirect/read`, {
+                params: {
+                    id: id,
+                },
+            })
+            .then((response) => this.response<RedirectType>(response));
+    readUserRedirects = (cursor: number, limit: number) =>
+        this.api
+            .get(`api/redirect/readUserRedirects`, {
+                params: {
+                    cursor: cursor > 0 ? cursor : null,
+                    limit: limit > 0 ? limit : null,
+                },
+            })
+            .then((response) => this.response<PaginatedResponse<RedirectType[]>>(response));
     updateRedirect = (arg: UpdateRedirectFormType) => this.api.put('api/redirect/update', arg).then((response) => this.response<RedirectType>(response));
-    deleteRedirect = (id: string) => this.api.delete(`api/redirect/delete?id=${id}`).then((response) => this.response<DeleteResponse>(response));
+    deleteRedirect = (id: string) =>
+        this.api
+            .delete(`api/redirect/delete`, {
+                params: {
+                    id: id,
+                },
+            })
+            .then((response) => this.response<DeleteResponse>(response));
     //Collection Api Calls
     createCollection = (arg: CreateCollectionFormType) => this.api.post('api/collection/create', arg).then((response) => this.response<CollectionType>(response));
-    readCollection = (id: string) => this.api.get(`api/collection/read?id=${id}`).then((response) => this.response<CollectionType>(response));
+    readCollection = (id: string) =>
+        this.api
+            .get(`api/collection/read`, {
+                params: {
+                    id: id,
+                },
+            })
+            .then((response) => this.response<CollectionType>(response));
     updateCollection = (arg: UpdateCollectionFormType) => this.api.put('api/collection/update', arg).then((response) => this.response<CollectionType>(response));
-    deleteCollection = (id: string) => this.api.delete(`api/collection/delete?id=${id}`).then((response) => this.response<DeleteResponse>(response));
+    deleteCollection = (id: string) =>
+        this.api
+            .delete(`api/collection/delete`, {
+                params: {
+                    id: id,
+                },
+            })
+            .then((response) => this.response<DeleteResponse>(response));
 }

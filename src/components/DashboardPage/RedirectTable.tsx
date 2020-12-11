@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,19 +11,12 @@ import { redirectTableStyle } from '@styles';
 import { useStore } from '@stores';
 import { observer } from 'mobx-react';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { DeleteRedirectModal, QrCodeRedirectModal } from '@modal';
 import CropFreeIcon from '@material-ui/icons/CropFree';
+import { DeleteRedirectModal, QrCodeRedirectModal } from '@modal';
 import { DeleteModalInitType } from 'modal/DashboardPage/DeleteRedirectModal';
 import { RTSkeleton } from '@skeletons';
 
-const useStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
-});
-
 export const RedirectTable: React.FC = observer(() => {
-    const classes = useStyles();
     const redirectTableCSS = redirectTableStyle();
     let [deleteModal, deleteModalToggle] = useState<boolean>(false);
     let [deleteRedirect, setDeleteRedirect] = useState<DeleteModalInitType | null>(null);
@@ -49,7 +41,7 @@ export const RedirectTable: React.FC = observer(() => {
             <Grid item xs={12} className={redirectTableCSS.root}>
                 {items.length > 0 ? (
                     <TableContainer square component={Paper}>
-                        <Table className={classes.table} aria-label="simple table">
+                        <Table className={redirectTableCSS.table} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
                                     <TableCell>URL</TableCell>

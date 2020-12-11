@@ -8,5 +8,7 @@ import { TotalClicksPie } from './DashboardPage/TotalClicks';
 import { ClickRedirectLinks } from './DashboardPage/ClickRedirectLinks';
 import { FeatureItemCard } from './IndexPage/FeatureItemCard';
 import { UnclaimedRedirects } from './IndexPage/UnclaimedRedirects';
+import { EnhancedTable, TableRedirectType } from './DashboardPage/EnhancedTable';
 
-export { ShortenForm, LoginForm, RegisterForm, ChangePasswordForm, ForgotPasswordForm, RedirectTable, TotalClicksPie, ClickRedirectLinks, FeatureItemCard, UnclaimedRedirects };
+export type { TableRedirectType };
+export { ShortenForm, LoginForm, RegisterForm, ChangePasswordForm, ForgotPasswordForm, RedirectTable, TotalClicksPie, ClickRedirectLinks, FeatureItemCard, EnhancedTable, UnclaimedRedirects };

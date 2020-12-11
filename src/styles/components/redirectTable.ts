@@ -5,4 +5,7 @@ export const redirectTableStyle = makeStyles((theme) => ({
         padding: '1rem',
         order: 3,
     },
+    table: {
+        minWidth: 650,
+    },
 }));
