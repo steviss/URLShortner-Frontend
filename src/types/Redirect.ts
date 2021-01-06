@@ -42,3 +42,8 @@ export interface ClaimRedirectFormType {
     id: string;
     claimKey: string;
 }
+export interface DeleteRedirectMessageType {
+    id: string;
+    status: string;
+    message: string;
+}

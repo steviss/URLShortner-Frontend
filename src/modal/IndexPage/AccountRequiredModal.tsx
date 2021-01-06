@@ -30,8 +30,7 @@ export const AccountRequiredModal: React.FC<ModalProps> = observer(({ open, hand
             </DialogTitle>
             <DialogContent className={accountRequiredModalCSS.dialogContent}>
                 <Typography variant="body1" component="p" className={accountRequiredModalCSS.bodyText}>
-                    In order to claim ownership of an Redirect, you are required to register an account with us. However, if you are already a user, just login and you can claim ownership using the
-                    same are on the Home page or in your personlized Dashboard.
+                    In order to claim ownership of a Redirect, you are required to register an account with us. However, if you are already a user, just login in to claim ownership.
                 </Typography>
                 <Box className={accountRequiredModalCSS.buttonBox}>
                     <CustomButton

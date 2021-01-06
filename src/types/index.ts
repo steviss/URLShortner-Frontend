@@ -1,4 +1,5 @@
 import { CreateCollectionFormType, UpdateCollectionFormType } from './Collection';
+import { TableHeadCell, TableOrder, TableRedirectType, EnhancedTableToolbarProps, EnhancedTableHeadProps } from './EnchancedTable';
 import { CreateRedirectFormType, UpdateRedirectFormType } from './Redirect';
 import { ResponseDataType } from './Response';
 import { ChangePasswordFormType, LogoutFormType, UserChangePasswordFormType, RegisterFormType, LoginFormType } from './User';
@@ -14,4 +15,9 @@ export type {
     ResponseDataType,
     CreateCollectionFormType,
     UpdateCollectionFormType,
+    TableRedirectType,
+    TableOrder,
+    TableHeadCell,
+    EnhancedTableToolbarProps,
+    EnhancedTableHeadProps,
 };

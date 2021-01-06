@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Drawer, IconButton, Typography, ListItem, ListItemIcon, ListItemText, Tooltip } from '@material-ui/core';
+import { Drawer, IconButton, Typography, Tooltip } from '@material-ui/core';
 import { useStore } from '@stores';
 import { drawerStyle, customDrawerStyle } from '@styles';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -8,6 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { userFooterRoutesArray, userMenuRoutesArray } from '@routes';
 import { DrawerMenu } from './DrawerMenu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { DrawerButton } from '@objects';
 
 export const UserDrawer: React.FC = observer(() => {
     const {
@@ -34,8 +35,9 @@ export const UserDrawer: React.FC = observer(() => {
             </header>
             <DrawerMenu routes={userMenuRoutesArray} closeMenu={toggleUserDrawerState} />
             <DrawerMenu routes={userFooterRoutesArray} className={userDrawerCSS.footerMenu} closeMenu={toggleUserDrawerState}>
-                <ListItem
-                    button
+                <DrawerButton
+                    icon={<ExitToAppIcon />}
+                    label="Logout"
                     onClick={() =>
                         logout({ logout: true }).then(() => {
                             toggleUserDrawerState();
@@ -43,14 +45,7 @@ export const UserDrawer: React.FC = observer(() => {
                             location.reload();
                         })
                     }
-                >
-                    <ListItemIcon>
-                        <ExitToAppIcon />
-                    </ListItemIcon>
-                    <ListItemText>
-                        <Typography>Logout</Typography>
-                    </ListItemText>
-                </ListItem>
+                />
             </DrawerMenu>
         </Drawer>
     );

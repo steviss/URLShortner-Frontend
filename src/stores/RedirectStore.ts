@@ -1,9 +1,9 @@
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { RootStore } from './RootStore';
 import BaseStore from './BaseStore';
-import { CreateRedirectFormType, RedirectType } from '../types/Redirect';
+import { CreateRedirectFormType, DeleteRedirectMessageType, RedirectType } from '../types/Redirect';
 import { UserPermissions } from '../types/User';
-import { TableRedirectType } from '@components';
+import { TableRedirectType } from '../types';
 
 export class RedirectStore extends BaseStore {
     items: RedirectType[] = [];
@@ -107,5 +107,22 @@ export class RedirectStore extends BaseStore {
         } catch (e) {
             this.rootStore.notificationStore.createNotification('error', e.message);
         }
+    };
+    deleteMultipleRedirects = async (ids: string[]): Promise<[deleting: boolean, deleteMessages: DeleteRedirectMessageType[]]> => {
+        let deleteMessages: DeleteRedirectMessageType[] = [];
+        let deleting: boolean = true;
+        ids.forEach(async (id) => {
+            try {
+                let deleteRedirect = await this.rootStore.apiStore.deleteRedirect(id);
+                deleteMessages.push({ id: id, status: 'success', message: deleteRedirect.message! });
+                this.rootStore.notificationStore.createNotification('success', deleteRedirect.message!);
+                this.items = this.items.filter((item) => item.id !== id);
+            } catch (e) {
+                deleteMessages.push({ id: id, status: 'error', message: e.message });
+                this.rootStore.notificationStore.createNotification('error', e.message);
+            }
+        });
+        deleting = false;
+        return [deleting, deleteMessages];
     };
 }
