@@ -243,7 +243,7 @@ export const RedirectTable: React.FC = observer(() => {
                                                 role="checkbox"
                                                 aria-checked={isItemSelected}
                                                 tabIndex={-1}
-                                                key={index}
+                                                key={`redirect-row-${index}`}
                                                 selected={isItemSelected}
                                             >
                                                 <TableCell padding="checkbox">
@@ -260,8 +260,12 @@ export const RedirectTable: React.FC = observer(() => {
                                                 <TableCell align={row.collections.length > 0 ? 'center' : 'right'}>
                                                     {row.collections.length > 0 ? (
                                                         <AvatarGroup max={4}>
-                                                            {row.collections.map((collection) => {
-                                                                return <Avatar alt={collection.name}>{[...collection.name][0]}</Avatar>;
+                                                            {row.collections.map((collection, index) => {
+                                                                return (
+                                                                    <Tooltip TransitionComponent={Zoom} arrow key={`collection-avatar-${index}`} title={collection.name}>
+                                                                        <Avatar alt={collection.name}>{[...collection.name][0]}</Avatar>
+                                                                    </Tooltip>
+                                                                );
                                                             })}
                                                         </AvatarGroup>
                                                     ) : (

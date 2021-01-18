@@ -7,7 +7,6 @@ export function EnhancedTableHead<T>(props: EnhancedTableHeadProps<T, TableHeadC
     const createSortHandler = (property: keyof T) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
     };
-    let hc = (headCells as unknown[]) as TableHeadCell<T>[];
     return (
         <TableHead>
             <TableRow>
@@ -21,7 +20,7 @@ export function EnhancedTableHead<T>(props: EnhancedTableHeadProps<T, TableHeadC
                         }}
                     />
                 </TableCell>
-                {hc.map((headCell, i) => (
+                {((headCells as unknown[]) as TableHeadCell<T>[]).map((headCell, i) => (
                     <TableCell key={`${headCell.id}`} align={i === 0 ? 'left' : 'right'} padding={headCell.disablePadding ? 'none' : 'default'} sortDirection={orderBy === headCell.id ? order : false}>
                         <TableSortLabel active={orderBy === headCell.id} direction={orderBy === headCell.id ? order : 'asc'} onClick={createSortHandler(headCell.id as keyof T)}>
                             {headCell.label}

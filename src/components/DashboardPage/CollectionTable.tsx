@@ -46,6 +46,12 @@ const headCells: TableHeadCell<TableCollectionType>[] = [
         label: 'Last Clicked',
     },
     {
+        id: 'totalClicks',
+        numeric: true,
+        disablePadding: false,
+        label: 'Total Clicks',
+    },
+    {
         id: 'totalRedirects',
         numeric: true,
         disablePadding: false,
