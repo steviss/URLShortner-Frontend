@@ -4,10 +4,8 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -16,36 +14,24 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import { observer } from 'mobx-react';
 import { useStore } from '@stores';
-import CropFreeIcon from '@material-ui/icons/CropFree';
-import { DeleteRedirectModal, QrCodeRedirectModal } from '@modal';
-import { DeleteModalInitType } from 'modal/DashboardPage/DeleteRedirectModal';
+import { DeleteCollectionModal, DeleteCollectionModalInitType } from '@modal';
 import { RTSkeleton } from '@skeletons';
 import { Skeleton, Zoom, Grid } from '@material-ui/core';
 import { betterTableToolbarStyles, betterRedirectTableStyle } from '@styles';
-import { TableOrder, TableRedirectType } from '../../types';
 import { getComparator, stableSort } from '@utility/tableSort';
-import { EnhancedTableToolbarProps, EnhancedTableHeadProps, TableHeadCell } from 'types';
+import { EnhancedTableToolbarProps, TableCollectionType, TableHeadCell, TableOrder } from '../../types';
+import { useHistory } from 'react-router-dom';
+import { EnhancedTableHead } from '@components';
 
-const headCells: TableHeadCell<TableRedirectType>[] = [
+const headCells: TableHeadCell<TableCollectionType>[] = [
     {
-        id: 'alias',
+        id: 'name',
         numeric: false,
         disablePadding: false,
-        label: 'Alias',
-    },
-    {
-        id: 'url',
-        numeric: false,
-        disablePadding: false,
-        label: 'Address',
-    },
-    {
-        id: 'slug',
-        numeric: false,
-        disablePadding: false,
-        label: 'Redirect URL',
+        label: 'Name',
     },
     {
         id: 'createdAt',
@@ -60,46 +46,12 @@ const headCells: TableHeadCell<TableRedirectType>[] = [
         label: 'Last Clicked',
     },
     {
-        id: 'totalClicks',
+        id: 'totalRedirects',
         numeric: true,
         disablePadding: false,
-        label: 'Total Clicks',
+        label: 'Total Redirects',
     },
 ];
-
-export const EnhancedTableHead: React.FC<EnhancedTableHeadProps> = (props) => {
-    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-    const createSortHandler = (property: keyof TableRedirectType) => (event: React.MouseEvent<unknown>) => {
-        onRequestSort(event, property);
-    };
-    return (
-        <TableHead>
-            <TableRow>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{
-                            'aria-label': 'select all desserts',
-                        }}
-                    />
-                </TableCell>
-                {headCells.map((headCell, i) => (
-                    <TableCell key={headCell.id} align={i === 0 ? 'left' : 'right'} padding={headCell.disablePadding ? 'none' : 'default'} sortDirection={orderBy === headCell.id ? order : false}>
-                        <TableSortLabel active={orderBy === headCell.id} direction={orderBy === headCell.id ? order : 'asc'} onClick={createSortHandler(headCell.id)}>
-                            {headCell.label}
-                            {orderBy === headCell.id ? <span className={classes.sortSpan}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</span> : null}
-                        </TableSortLabel>
-                    </TableCell>
-                ))}
-                <TableCell padding="default" align="right">
-                    Action
-                </TableCell>
-            </TableRow>
-        </TableHead>
-    );
-};
 
 export const EnhancedTableToolbar: React.FC<EnhancedTableToolbarProps> = (props) => {
     const enchancedTableToolbarCSS = betterTableToolbarStyles();
@@ -137,32 +89,31 @@ export const EnhancedTableToolbar: React.FC<EnhancedTableToolbarProps> = (props)
     );
 };
 
-export const EnhancedTable: React.FC = observer(() => {
+export const CollectionTable: React.FC = observer(() => {
     const betterRedirectTableCSS = betterRedirectTableStyle();
     const [order, setOrder] = useState<TableOrder>('asc');
-    const [orderBy, setOrderBy] = useState<keyof TableRedirectType>('createdAt');
+    const [orderBy, setOrderBy] = useState<keyof TableCollectionType>('createdAt');
     const [selected, setSelected] = useState<string[]>([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const {
-        redirectStore: { tableItems, totalRedirects, loadedRedirects, getRedirects, loadingMoreRedirects },
+        collectionStore: { tableItems, totalCollections, loadedCollections, getCollections, loadingCollections },
     } = useStore();
     let [deleteModal, deleteModalToggle] = useState<boolean>(false);
-    let [deleteRedirect, setDeleteRedirect] = useState<DeleteModalInitType | null>(null);
-    let [qrModal, qrModalToggle] = useState<boolean>(false);
-    let [qrUrl, setQrUrl] = useState<string | null>(null);
-    let currentPage = stableSort(tableItems, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-    const openQrModal = (event: React.MouseEvent<unknown>, url: string) => {
+    let [deleteCollection, setDeleteRedirect] = useState<DeleteCollectionModalInitType | null>(null);
+    let currentPage = stableSort<TableCollectionType>(tableItems, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    const history = useHistory();
+    const viewCollection = (event: React.MouseEvent<unknown>, id: string) => {
         event.stopPropagation();
-        qrModalToggle(true);
-        setQrUrl(url);
+        console.log('wololooo');
+        history.push(`/collections/${id}`);
     };
-    const openDeleteRedirect = (event: React.MouseEvent<unknown>, redirect: DeleteModalInitType) => {
+    const openDeleteCollection = (event: React.MouseEvent<unknown>, redirect: DeleteCollectionModalInitType) => {
         event.stopPropagation();
         deleteModalToggle(true);
         setDeleteRedirect(redirect);
     };
-    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TableRedirectType) => {
+    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TableCollectionType) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
@@ -196,23 +147,23 @@ export const EnhancedTable: React.FC = observer(() => {
     const handleChangePage = (event: unknown, newPage: number) => {
         if (page < newPage) {
             let pageNextItems = (newPage + 1) * rowsPerPage;
-            if (pageNextItems > loadedRedirects && loadedRedirects !== totalRedirects) {
-                getRedirects(loadedRedirects, pageNextItems - loadedRedirects);
+            if (pageNextItems > loadedCollections && loadedCollections !== totalCollections) {
+                getCollections(loadedCollections, pageNextItems - loadedCollections);
             }
         }
         setPage(newPage);
     };
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         let rowsPerPage: number = parseInt(event.target.value, 10);
-        if (rowsPerPage > loadedRedirects) {
-            getRedirects(loadedRedirects, rowsPerPage - loadedRedirects);
+        if (rowsPerPage > loadedCollections) {
+            getCollections(loadedCollections, rowsPerPage - loadedCollections);
         }
         setRowsPerPage(rowsPerPage);
         setPage(0);
     };
     const isSelected = (name: string) => selected.indexOf(name) !== -1;
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - totalRedirects) : 0;
-    const loadingMoreRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - loadedRedirects) - emptyRows : 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - totalCollections) : 0;
+    const loadingMoreRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - loadedCollections) - emptyRows : 0;
     const loadingMoreSkeleton = () => {
         return (
             loadingMoreRows > 0 &&
@@ -244,14 +195,15 @@ export const EnhancedTable: React.FC = observer(() => {
                         <EnhancedTableToolbar numSelected={selected.length} />
                         <TableContainer>
                             <Table className={betterRedirectTableCSS.table} aria-labelledby="tableTitle">
-                                <EnhancedTableHead
+                                <EnhancedTableHead<TableCollectionType>
+                                    headCells={headCells}
                                     classes={betterRedirectTableCSS}
                                     numSelected={selected.length}
                                     order={order}
                                     orderBy={orderBy}
                                     onSelectAllClick={handleSelectAllClick}
                                     onRequestSort={handleRequestSort}
-                                    rowCount={totalRedirects}
+                                    rowCount={totalCollections}
                                 />
                                 <TableBody>
                                     {currentPage.map((row, index) => {
@@ -275,26 +227,25 @@ export const EnhancedTable: React.FC = observer(() => {
                                                         }}
                                                     />
                                                 </TableCell>
-                                                <TableCell align="left">{row.slug}</TableCell>
-                                                <TableCell align="right">{row.url}</TableCell>
-                                                <TableCell align="right">{row.slug}</TableCell>
+                                                <TableCell align="left">{row.name}</TableCell>
                                                 <TableCell align="right">{new Date(row.createdAt as Date).toLocaleString() || 'Now.'}</TableCell>
                                                 <TableCell align="right">{row.lastClickedAt ? new Date(row.lastClickedAt).toLocaleString() : 'None.'}</TableCell>
                                                 <TableCell align="right">{row.totalClicks || 'None.'}</TableCell>
+                                                <TableCell align="right">{row.totalRedirects || 'None.'}</TableCell>
                                                 <TableCell align="right">
-                                                    <Tooltip title="View QR Code">
-                                                        <IconButton aria-label="qrcode" onClick={(event) => openQrModal(event, row.slug as string)}>
-                                                            <CropFreeIcon />
+                                                    <Tooltip title="View Link">
+                                                        <IconButton aria-label="viewredirect" onClick={(event) => viewCollection(event, row.id as string)}>
+                                                            <VisibilityIcon />
                                                         </IconButton>
                                                     </Tooltip>
                                                     <Tooltip title="Delete Redirect">
                                                         <IconButton
                                                             aria-label="delete"
                                                             onClick={(event) =>
-                                                                openDeleteRedirect(event, {
-                                                                    slug: row.slug as string,
-                                                                    url: row.url as string,
-                                                                    clicks: row.totalClicks as number,
+                                                                openDeleteCollection(event, {
+                                                                    name: row.name as string,
+                                                                    lastClickedAt: row.lastClickedAt ? new Date(row.lastClickedAt).toLocaleString() : 'None.',
+                                                                    clicks: row.totalClicks,
                                                                     id: row.id as string,
                                                                 })
                                                             }
@@ -307,7 +258,7 @@ export const EnhancedTable: React.FC = observer(() => {
                                         );
                                     })}
                                     {loadingMoreSkeleton()}
-                                    {emptyRows > 0 && rowsPerPage < 10 && !loadingMoreRedirects && (
+                                    {emptyRows > 0 && rowsPerPage < 10 && !loadingCollections && (
                                         <TableRow
                                             style={{
                                                 height: 81 * emptyRows,
@@ -317,20 +268,19 @@ export const EnhancedTable: React.FC = observer(() => {
                                         </TableRow>
                                     )}
                                 </TableBody>
-                                <DeleteRedirectModal redirect={deleteRedirect} open={deleteModal} handleClose={() => deleteModalToggle(false)} />
-                                <QrCodeRedirectModal url={qrUrl} open={qrModal} handleClose={() => qrModalToggle(false)} />
+                                <DeleteCollectionModal collection={deleteCollection} open={deleteModal} handleClose={() => deleteModalToggle(false)} />
                             </Table>
                         </TableContainer>
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25]}
                             component="div"
-                            count={totalRedirects}
+                            count={totalCollections}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}
                             onRowsPerPageChange={handleChangeRowsPerPage}
-                            nextIconButtonProps={{ disabled: loadingMoreRedirects || emptyRows > 0 }}
-                            backIconButtonProps={{ disabled: loadingMoreRedirects || page === 0 }}
+                            nextIconButtonProps={{ disabled: loadingCollections || emptyRows > 0 }}
+                            backIconButtonProps={{ disabled: loadingCollections || page === 0 }}
                         />
                     </Paper>
                 ) : (

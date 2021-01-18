@@ -1,7 +1,3 @@
-# Tools
-
--   Typescript Playground - https://www.typescriptlang.org/play/
-
 # Credits
 
 ## SVGs Landing Page

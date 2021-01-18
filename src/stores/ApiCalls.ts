@@ -16,7 +16,6 @@ export interface ApiCalls {
     createRedirect: (arg: CreateRedirectFormType) => Promise<ResponseDataType<RedirectType>>;
     claimRedirect: (arg: ClaimRedirectFormType) => Promise<ResponseDataType<RedirectType>>;
     readRedirect: (id: string) => Promise<ResponseDataType<RedirectType>>;
-    readUserRedirects: (cursor: number, limit: number) => Promise<ResponseDataType<PaginatedResponse<RedirectType[]>>>;
     updateRedirect: (arg: UpdateRedirectFormType) => Promise<ResponseDataType<RedirectType>>;
     deleteRedirect: (id: string) => Promise<ResponseDataType<DeleteResponse>>;
     //Collection Api Calls
@@ -24,4 +23,7 @@ export interface ApiCalls {
     readCollection: (id: string) => Promise<ResponseDataType<CollectionType>>;
     updateCollection: (arg: UpdateCollectionFormType) => Promise<ResponseDataType<CollectionType>>;
     deleteCollection: (id: string) => Promise<ResponseDataType<DeleteResponse>>;
+    //User Api Calls
+    readUserRedirects: (cursor: number, limit: number) => Promise<ResponseDataType<PaginatedResponse<RedirectType[]>>>;
+    readUserCollections: (cursor: number, limit: number) => Promise<ResponseDataType<PaginatedResponse<CollectionType[]>>>;
 }

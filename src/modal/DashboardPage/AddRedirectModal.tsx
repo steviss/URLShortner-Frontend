@@ -41,7 +41,7 @@ export const AddRedirectModal: React.FC<FormModalProps> = observer(({ open, hand
                 }}
                 validationSchema={validationSchema}
             >
-                {({ submitForm, isSubmitting }) => (
+                {({ isSubmitting }) => (
                     <Form>
                         <DialogTitle className={addRedirectModalCSS.dialogHeader}>
                             <Typography variant="h2" component="span" className={addRedirectModalCSS.heading}>

@@ -1,6 +1,7 @@
 import { config } from '@utility/config';
 import { ApiCalls } from './ApiCalls';
 import { ClaimStore } from './ClaimStore';
+import { CollectionStore } from './CollectionStore';
 import { LayoutStore } from './LayoutStore';
 import { MockStore } from './MockStore';
 import { NetworkStore } from './NetworkStore';
@@ -15,12 +16,14 @@ export class RootStore {
     redirectStore: RedirectStore;
     notificationStore: NotificationStore;
     claimStore: ClaimStore;
+    collectionStore: CollectionStore;
     constructor() {
         this.layoutStore = new LayoutStore(this);
         this.userStore = new UserStore(this);
         this.redirectStore = new RedirectStore(this);
         this.notificationStore = new NotificationStore(this);
         this.claimStore = new ClaimStore(this);
+        this.collectionStore = new CollectionStore(this);
         if (!config.__PROD__) {
             this.apiStore = new NetworkStore(this);
         } else {

@@ -15,21 +15,21 @@ import DnsIcon from '@material-ui/icons/Dns';
 export interface FormModalProps {
     open: boolean;
     handleClose: () => void;
-    redirect: DeleteRedirectModalInitType | null;
+    collection: DeleteCollectionModalInitType | null;
 }
 const validationSchema = Yup.object({
     id: Yup.string().uuid(),
 });
-export interface DeleteRedirectModalInitType {
+export interface DeleteCollectionModalInitType {
     id: string;
-    slug: string;
-    url: string;
+    name: string;
     clicks: number;
+    lastClickedAt: string;
 }
-export const DeleteRedirectModal: React.FC<FormModalProps> = observer(({ open, handleClose, redirect }) => {
+export const DeleteCollectionModal: React.FC<FormModalProps> = observer(({ open, handleClose, collection }) => {
     const dialogCSS = dialogStyle();
     const deleteRedirectModalCSS = deleteRedirectModalStyle();
-    const { id, slug, url, clicks } = redirect || { id: '', slug: '', url: '', clicks: 0 };
+    const { id, name, lastClickedAt, clicks } = collection || { id: '', name: '', lastClickedAt: '', clicks: 0 };
     let modalId = 'Delete Redirect Modal';
     const {
         redirectStore: { deleteRedirect },
@@ -64,7 +64,7 @@ export const DeleteRedirectModal: React.FC<FormModalProps> = observer(({ open, h
                                             <DnsIcon />
                                         </Avatar>
                                     </ListItemAvatar>
-                                    <ListItemText primary="Slug" secondary={slug || 'none'} />
+                                    <ListItemText primary="Name" secondary={name || 'none'} />
                                 </ListItem>
                                 <ListItem>
                                     <ListItemAvatar>
@@ -72,7 +72,7 @@ export const DeleteRedirectModal: React.FC<FormModalProps> = observer(({ open, h
                                             <HttpIcon />
                                         </Avatar>
                                     </ListItemAvatar>
-                                    <ListItemText primary="URL" secondary={url || 'none'} />
+                                    <ListItemText primary="Last Clicked" secondary={lastClickedAt || 'none'} />
                                 </ListItem>
                                 <ListItem>
                                     <ListItemAvatar>

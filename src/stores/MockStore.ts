@@ -3,22 +3,31 @@ import { UserType, UserPermissions } from '../types/User';
 import { ApiCalls } from './ApiCalls';
 import BaseStore from './BaseStore';
 import userRedirects from '../mockData/redirects.json';
+import userCollections from '../mockData/collections.json';
 import { ClaimRedirectFormType, CreateRedirectFormType, RedirectType, UpdateRedirectFormType } from '../types/Redirect';
 import { ClickType } from '../types/Click';
 import { v4 } from 'uuid';
-import { CollectionType } from 'types/Collection';
+import { CollectionStrippedType, CollectionType } from '../types/Collection';
 
 export class MockStore extends BaseStore implements ApiCalls {
     mockUser: UserType = { id: '2e8e9194-ae43-41c4-b05b-bace482ae8da', email: 'test@test.com' };
     mockRedirects: RedirectType[] = (userRedirects as any[]).map((redirect) => {
         let temp = Object.assign({}, redirect);
         temp.createdAt = new Date(parseInt(redirect.createdAt, 10)).toLocaleString();
+        temp.collections = [] as CollectionStrippedType[];
         temp.clicks = temp.clicks.map((click: any) => {
             let temp = Object.assign({}, click);
             temp.createdAt = new Date(parseInt(click.createdAt, 10)).toLocaleString();
             return temp as ClickType;
         });
         return temp as RedirectType;
+    });
+    mockCollections: CollectionType[] = (userCollections as any[]).map((collection) => {
+        let temp = Object.assign({}, collection);
+        temp.createdAt = new Date(parseInt(collection.createdAt, 10)).toLocaleString();
+        temp.clicks = 0;
+        temp.redirects = [] as RedirectType[];
+        return temp as CollectionType;
     });
     register = () => {
         return Promise.resolve<ResponseDataType<UserType>>({ status: 'success', message: 'Succesfully created an account!', data: this.mockUser });
@@ -49,32 +58,24 @@ export class MockStore extends BaseStore implements ApiCalls {
         return Promise.resolve<ResponseDataType<RedirectType>>({
             status: 'success',
             message: 'Succesfully claimed a Redirect!',
-            data: { id: arg.id, slug: '', url: '', clicks: [] as ClickType[], ownerId: this.mockUser.id, createdAt: new Date() },
+            data: { id: arg.id, slug: '', url: '', clicks: [] as ClickType[], collections: [] as CollectionStrippedType[], ownerId: this.mockUser.id, createdAt: new Date() },
         });
     };
     createRedirect = (arg: CreateRedirectFormType) => {
         return Promise.resolve<ResponseDataType<RedirectType>>({
             status: 'success',
             message: 'Succesfully created a Redirect!',
-            data: { id: v4(), slug: arg.slug, url: arg.url, clicks: [] as ClickType[], ownerId: this.mockUser.id, createdAt: new Date() },
+            data: { id: v4(), slug: arg.slug, url: arg.url, clicks: [] as ClickType[], collections: [] as CollectionStrippedType[], ownerId: this.mockUser.id, createdAt: new Date() },
         });
     };
     readRedirect = () => {
         return Promise.resolve<ResponseDataType<RedirectType>>({ status: 'success', message: 'Succesfully read a Redirect!' });
     };
-    readUserRedirects = () => {
-        this.rootStore.notificationStore.createNotification('success', 'Succesfully retrieved all user redirects.');
-        return Promise.resolve<ResponseDataType<PaginatedResponse<RedirectType[]>>>({
-            status: 'success',
-            message: 'Succesfully retrieved all user redirects.',
-            data: { items: this.mockRedirects, hasMore: false, total: this.mockRedirects.length },
-        });
-    };
     updateRedirect = (arg: UpdateRedirectFormType) => {
         return Promise.resolve<ResponseDataType<RedirectType>>({
             status: 'success',
             message: 'Succesfully updated a Redirect!',
-            data: { id: arg.id, slug: arg.slug, url: '', clicks: [] as ClickType[], ownerId: this.mockUser.id, createdAt: new Date() },
+            data: { id: arg.id, slug: arg.slug, url: '', clicks: [] as ClickType[], collections: [] as CollectionStrippedType[], ownerId: this.mockUser.id, createdAt: new Date() },
         });
     };
     deleteRedirect = () => {
@@ -93,5 +94,23 @@ export class MockStore extends BaseStore implements ApiCalls {
     };
     deleteCollection = () => {
         return Promise.resolve<ResponseDataType<DeleteResponse>>({ status: 'success', message: 'Succesfully deleted a Collection!' });
+    };
+    //User Api Calls
+
+    readUserRedirects = () => {
+        this.rootStore.notificationStore.createNotification('success', 'Succesfully retrieved all user redirects.');
+        return Promise.resolve<ResponseDataType<PaginatedResponse<RedirectType[]>>>({
+            status: 'success',
+            message: 'Succesfully retrieved all user redirects.',
+            data: { items: this.mockRedirects, hasMore: false, total: this.mockRedirects.length },
+        });
+    };
+    readUserCollections = () => {
+        this.rootStore.notificationStore.createNotification('success', 'Succesfully retrieved all user collections.');
+        return Promise.resolve<ResponseDataType<PaginatedResponse<CollectionType[]>>>({
+            status: 'success',
+            message: 'Succesfully retrieved all user collections.',
+            data: { items: this.mockCollections, hasMore: false, total: this.mockCollections.length },
+        });
     };
 }

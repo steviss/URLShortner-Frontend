@@ -10,7 +10,7 @@ export class RedirectStore extends BaseStore {
     totalRedirects: number = 0;
     loadedRedirects: number = 0;
     tableItems: TableRedirectType[] = [];
-    loadingMoreRedirects: boolean = false;
+    loadingRedirects: boolean = false;
     constructor(rootStore: RootStore) {
         super(rootStore);
         makeObservable(this, {
@@ -18,16 +18,17 @@ export class RedirectStore extends BaseStore {
             tableItems: observable,
             totalRedirects: observable,
             loadedRedirects: observable,
-            loadingMoreRedirects: observable,
+            loadingRedirects: observable,
             setRedirects: action,
             getRedirects: action,
             createRedirect: action,
             deleteRedirect: action,
+            deleteMultipleRedirects: action,
             toggleLoadingMore: action,
         });
     }
     toggleLoadingMore = () => {
-        this.loadingMoreRedirects = !this.loadingMoreRedirects;
+        this.loadingRedirects = !this.loadingRedirects;
     };
     setRedirects = (items: RedirectType[], totalRedirects: number) => {
         if (this.loadedRedirects !== 0) {
@@ -41,6 +42,7 @@ export class RedirectStore extends BaseStore {
                         url: item.url,
                         alias: item.url,
                         slug: item.slug,
+                        collections: item.collections,
                         createdAt: item.createdAt,
                         lastClickedAt: item.clicks.length > 0 ? item.clicks[0].createdAt : null,
                         totalClicks: item.clicks.length,
@@ -57,6 +59,7 @@ export class RedirectStore extends BaseStore {
                     url: item.url,
                     alias: item.url,
                     slug: item.slug,
+                    collections: item.collections,
                     createdAt: item.createdAt,
                     lastClickedAt: item.clicks.length > 0 ? item.clicks[0].createdAt : null,
                     totalClicks: item.clicks.length,

@@ -40,6 +40,7 @@ import { unclaimedRedirectsStyle } from './components/unclaimedRedirects';
 import { accountRequiredModalStyle } from './modal/accountRequiredModal';
 import { claimRedirectModalStyle } from './modal/claimRedirectModal';
 import { betterTableToolbarStyles, betterRedirectTableStyle } from './components/betterRedirectTable';
+import { addCollectionModalStyle } from './modal/addCollectionModal';
 
 export {
     theme,
@@ -85,4 +86,5 @@ export {
     claimRedirectModalStyle,
     betterTableToolbarStyles,
     betterRedirectTableStyle,
+    addCollectionModalStyle,
 };

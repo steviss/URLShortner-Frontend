@@ -1,4 +1,5 @@
 import { ClickType } from './Click';
+import { CollectionStrippedType } from './Collection';
 
 export interface RedirectType {
     id: string;
@@ -7,6 +8,7 @@ export interface RedirectType {
     ownerId: string;
     clicks: ClickType[];
     createdAt: Date;
+    collections: CollectionStrippedType[];
     //These are just visible by the database
     //owner: User;
     //createdAt: string;

@@ -6,6 +6,11 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
         let tempB = new Date((b[orderBy] as unknown) as Date).getTime();
         return tempA - tempB;
     }
+    if (orderBy === 'collections') {
+        let tempA = ((a[orderBy] as unknown) as any[]).length;
+        let tempB = ((b[orderBy] as unknown) as any[]).length;
+        return tempA - tempB;
+    }
     if (b[orderBy] < a[orderBy]) {
         return -1;
     }
@@ -18,7 +23,7 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 export function getComparator<Key extends keyof any>(
     order: TableOrder,
     orderBy: Key,
-): (a: { [key in Key]: number | string | Date | null }, b: { [key in Key]: number | string | Date | null }) => number {
+): (a: { [key in Key]: number | string | Date | null | { [key: string]: string }[] }, b: { [key in Key]: number | string | Date | null | { [key: string]: string }[] }) => number {
     return order === 'desc' ? (a, b) => descendingComparator(a, b, orderBy) : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
