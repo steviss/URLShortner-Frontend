@@ -74,7 +74,7 @@ export const EnhancedTableToolbar: React.FC<EnhancedTableToolbarProps> = (props)
                 </Typography>
             ) : (
                 <Typography className={enchancedTableToolbarCSS.title} variant="h6" id="tableTitle" component="div">
-                    Redirects
+                    Collections
                 </Typography>
             )}
             {numSelected > 0 ? (
@@ -111,8 +111,7 @@ export const CollectionTable: React.FC = observer(() => {
     const history = useHistory();
     const viewCollection = (event: React.MouseEvent<unknown>, id: string) => {
         event.stopPropagation();
-        console.log('wololooo');
-        history.push(`/collections/${id}`);
+        history.push(`/collection/${id}`);
     };
     const openDeleteCollection = (event: React.MouseEvent<unknown>, redirect: DeleteCollectionModalInitType) => {
         event.stopPropagation();

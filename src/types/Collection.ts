@@ -15,6 +15,7 @@ export interface CollectionType {
 export interface CollectionStrippedType {
     id: string;
     name: string;
+    color: string;
 }
 
 export interface CreateCollectionFormType {

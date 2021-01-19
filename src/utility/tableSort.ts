@@ -20,10 +20,10 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     return 0;
 }
 
-export function getComparator<Key extends keyof any>(
+export function getComparator<T, Key extends keyof any>(
     order: TableOrder,
     orderBy: Key,
-): (a: { [key in Key]: number | string | Date | null | { [key: string]: string }[] }, b: { [key in Key]: number | string | Date | null | { [key: string]: string }[] }) => number {
+): (a: { [key in Key]: number | string | Date | null | T }, b: { [key in Key]: number | string | Date | null | T }) => number {
     return order === 'desc' ? (a, b) => descendingComparator(a, b, orderBy) : (a, b) => -descendingComparator(a, b, orderBy);
 }
 

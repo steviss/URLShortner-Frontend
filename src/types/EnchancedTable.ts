@@ -1,11 +1,12 @@
 import { betterRedirectTableStyle } from '@styles';
+import { CollectionStrippedType } from './Collection';
 
 export interface TableRedirectType {
     id: string;
     alias: string;
     url: string;
     slug: string;
-    collections: { name: string }[];
+    collections: CollectionStrippedType[];
     createdAt: Date;
     lastClickedAt: Date | null;
     totalClicks: number;

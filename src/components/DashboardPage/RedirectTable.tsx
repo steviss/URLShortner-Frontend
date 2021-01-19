@@ -132,8 +132,7 @@ export const RedirectTable: React.FC = observer(() => {
     };
     const viewRedirect = (event: React.MouseEvent<unknown>, id: string) => {
         event.stopPropagation();
-        console.log('wololooo');
-        history.push(`/collections/${id}`);
+        history.push(`/redirect/${id}`);
     };
     const openDeleteRedirect = (event: React.MouseEvent<unknown>, redirect: DeleteRedirectModalInitType) => {
         event.stopPropagation();
@@ -263,7 +262,9 @@ export const RedirectTable: React.FC = observer(() => {
                                                             {row.collections.map((collection, index) => {
                                                                 return (
                                                                     <Tooltip TransitionComponent={Zoom} arrow key={`collection-avatar-${index}`} title={collection.name}>
-                                                                        <Avatar alt={collection.name}>{[...collection.name][0]}</Avatar>
+                                                                        <Avatar alt={collection.name} style={{ backgroundColor: collection.color }}>
+                                                                            {[...collection.name][0]}
+                                                                        </Avatar>
                                                                     </Tooltip>
                                                                 );
                                                             })}

@@ -31,19 +31,21 @@ export class CollectionStore extends BaseStore {
     };
     setCollections = (items: CollectionType[], totalRedirects: number) => {
         if (this.loadedCollections !== 0) {
-            this.items = [...this.items, ...items];
+            this.items = [...new Set([...this.items, ...items])];
             this.loadedCollections = this.loadedCollections + items.length;
             this.tableItems = [
-                ...this.tableItems,
-                ...items.map((item) => {
-                    return {
-                        id: item.id,
-                        name: item.name,
-                        createdAt: item.createdAt,
-                        totalClicks: item.clicks,
-                        totalRedirects: item.redirects.length || 0,
-                    } as TableCollectionType;
-                }),
+                ...new Set([
+                    ...this.tableItems,
+                    ...items.map((item) => {
+                        return {
+                            id: item.id,
+                            name: item.name,
+                            createdAt: item.createdAt,
+                            totalClicks: item.clicks,
+                            totalRedirects: item.redirects.length || 0,
+                        } as TableCollectionType;
+                    }),
+                ]),
             ];
         } else {
             this.totalCollections = totalRedirects;
