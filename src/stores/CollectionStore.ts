@@ -31,12 +31,15 @@ export class CollectionStore extends BaseStore {
     };
     setCollections = (items: CollectionType[], totalRedirects: number) => {
         if (this.loadedCollections !== 0) {
-            this.items = [...new Set([...this.items, ...items])];
+            let itemIds = new Set(this.items.map((item) => item.id)),
+                tableItemIds = new Set(this.tableItems.map((item) => item.id));
             this.loadedCollections = this.loadedCollections + items.length;
+            this.items = [...this.items, ...items.filter((item) => !itemIds.has(item.id))];
             this.tableItems = [
-                ...new Set([
-                    ...this.tableItems,
-                    ...items.map((item) => {
+                ...this.tableItems,
+                ...items
+                    .filter((item) => !tableItemIds.has(item.id))
+                    .map((item) => {
                         return {
                             id: item.id,
                             name: item.name,
@@ -45,7 +48,6 @@ export class CollectionStore extends BaseStore {
                             totalRedirects: item.redirects.length || 0,
                         } as TableCollectionType;
                     }),
-                ]),
             ];
         } else {
             this.totalCollections = totalRedirects;

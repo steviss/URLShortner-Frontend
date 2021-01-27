@@ -32,12 +32,15 @@ export class RedirectStore extends BaseStore {
     };
     setRedirects = (items: RedirectType[], totalRedirects: number) => {
         if (this.loadedRedirects !== 0) {
-            this.items = [...new Set([...this.items, ...items])];
+            let itemIds = new Set(this.items.map((item) => item.id)),
+                tableItemIds = new Set(this.tableItems.map((item) => item.id));
             this.loadedRedirects = this.loadedRedirects + items.length;
+            this.items = [...this.items, ...items.filter((item) => !itemIds.has(item.id))];
             this.tableItems = [
-                ...new Set([
-                    ...this.tableItems,
-                    ...items.map((item) => {
+                ...this.tableItems,
+                ...items
+                    .filter((item) => !tableItemIds.has(item.id))
+                    .map((item) => {
                         return {
                             id: item.id,
                             url: item.url,
@@ -49,13 +52,13 @@ export class RedirectStore extends BaseStore {
                             totalClicks: item.clicks.length,
                         } as TableRedirectType;
                     }),
-                ]),
             ];
-            console.log(this.tableItems);
+            console.log('Items:', this.items);
+            console.log('Table items:', this.tableItems);
         } else {
             this.totalRedirects = totalRedirects;
-            this.items = items;
             this.loadedRedirects = items.length;
+            this.items = items;
             this.tableItems = items.map((item) => {
                 return {
                     id: item.id,
