@@ -1,4 +1,4 @@
-import { DashboardPage, IndexPage, LoginPage, RegisterPage, PrivacyPage, TermsPage, ForgotPasswordPage, ChangePasswordPage } from '@pages';
+import { DashboardPage, IndexPage, LoginPage, RegisterPage, PrivacyPage, TermsPage, ForgotPasswordPage, ChangePasswordPage, CollectionPage, RedirectPage } from '@pages';
 import React, { ReactElement } from 'react';
 import { Route } from 'react-router';
 import { Redirect, Switch } from 'react-router-dom';
@@ -12,6 +12,7 @@ import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import { observer } from 'mobx-react';
 import { useStore } from '@stores';
 import { UserPermissions } from '../types/User';
+import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 
 export interface RouteType {
     id: string;
@@ -33,12 +34,28 @@ export const userMenuRoutesArray: RouteType[] = [
         icon: <DashboardIcon />,
         component: <DashboardPage />,
     },
+    {
+        id: 'collection',
+        path: '/collection/:id',
+        title: 'Collection',
+        permissions: UserPermissions.User,
+        icon: <CreateNewFolderIcon />,
+        component: <CollectionPage />,
+    },
+    {
+        id: 'redirect',
+        path: '/redirect/:id',
+        title: 'Redirect',
+        permissions: UserPermissions.User,
+        icon: <CreateNewFolderIcon />,
+        component: <RedirectPage />,
+    },
 ];
 export const userFooterRoutesArray: RouteType[] = [];
 
 export const publicMenuRoutesArray: RouteType[] = [
     {
-        id: 'Home',
+        id: 'home',
         path: '/',
         title: 'Home',
         permissions: UserPermissions.Guest,

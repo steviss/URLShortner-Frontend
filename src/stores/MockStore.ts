@@ -2,33 +2,44 @@ import { DeleteResponse, ForgotPasswordResponse, LogoutResponse, PaginatedRespon
 import { UserType, UserPermissions } from '../types/User';
 import { ApiCalls } from './ApiCalls';
 import BaseStore from './BaseStore';
-import userRedirects from '../mockData/redirects.json';
-import userCollections from '../mockData/collections.json';
 import { ClaimRedirectFormType, CreateRedirectFormType, RedirectType, UpdateRedirectFormType } from '../types/Redirect';
 import { ClickType } from '../types/Click';
 import { v4 } from 'uuid';
 import { CollectionStrippedType, CollectionType } from '../types/Collection';
+import faker from 'faker';
+
+const fakerRedirects = (): RedirectType[] => {
+    return Array.from(new Array(150)).map((_, index) => {
+        return Object.assign({
+            id: faker.random.uuid(),
+            slug: faker.random.word(),
+            url: faker.internet.url(),
+            createdAt: faker.date.past(),
+            ownerId: faker.random.uuid(),
+            clicks: [] as ClickType[],
+            collections: [] as CollectionType[],
+        }) as RedirectType;
+    }) as RedirectType[];
+};
+
+const fakerCollecitons = (): CollectionType[] => {
+    return Array.from(new Array(50)).map((_, index) => {
+        return Object.assign({
+            id: faker.random.uuid(),
+            name: faker.random.word(),
+            url: faker.internet.url(),
+            createdAt: faker.date.past(),
+            ownerId: faker.random.uuid(),
+            clicks: faker.random.number(),
+            redirects: [] as RedirectType[],
+        }) as CollectionType;
+    }) as CollectionType[];
+};
 
 export class MockStore extends BaseStore implements ApiCalls {
     mockUser: UserType = { id: '2e8e9194-ae43-41c4-b05b-bace482ae8da', email: 'test@test.com' };
-    mockRedirects: RedirectType[] = (userRedirects as any[]).map((redirect) => {
-        let temp = Object.assign({}, redirect);
-        temp.createdAt = new Date(parseInt(redirect.createdAt, 10)).toLocaleString();
-        temp.collections = [] as CollectionStrippedType[];
-        temp.clicks = temp.clicks.map((click: any) => {
-            let temp = Object.assign({}, click);
-            temp.createdAt = new Date(parseInt(click.createdAt, 10)).toLocaleString();
-            return temp as ClickType;
-        });
-        return temp as RedirectType;
-    });
-    mockCollections: CollectionType[] = (userCollections as any[]).map((collection) => {
-        let temp = Object.assign({}, collection);
-        temp.createdAt = new Date(parseInt(collection.createdAt, 10)).toLocaleString();
-        temp.clicks = 0;
-        temp.redirects = [] as RedirectType[];
-        return temp as CollectionType;
-    });
+    mockRedirects: RedirectType[] = fakerRedirects();
+    mockCollections: CollectionType[] = fakerCollecitons();
     register = () => {
         return Promise.resolve<ResponseDataType<UserType>>({ status: 'success', message: 'Succesfully created an account!', data: this.mockUser });
     };

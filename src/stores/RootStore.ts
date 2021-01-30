@@ -24,7 +24,7 @@ export class RootStore {
         this.notificationStore = new NotificationStore(this);
         this.claimStore = new ClaimStore(this);
         this.collectionStore = new CollectionStore(this);
-        if (!config.__PROD__) {
+        if (config.__PROD__) {
             this.apiStore = new NetworkStore(this);
         } else {
             this.apiStore = new MockStore(this);

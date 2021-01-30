@@ -263,7 +263,7 @@ export const CollectionTable: React.FC = observer(() => {
                                         );
                                     })}
                                     {loadingMoreSkeleton()}
-                                    {emptyRows > 0 && rowsPerPage < 10 && !loadingCollections && (
+                                    {emptyRows > 0 && !loadingCollections && (
                                         <TableRow
                                             style={{
                                                 height: 81 * emptyRows,
@@ -284,7 +284,7 @@ export const CollectionTable: React.FC = observer(() => {
                             page={page}
                             onPageChange={handleChangePage}
                             onRowsPerPageChange={handleChangeRowsPerPage}
-                            nextIconButtonProps={{ disabled: loadingCollections || emptyRows > 0 }}
+                            nextIconButtonProps={{ disabled: loadingCollections || emptyRows > 0 || totalCollections <= rowsPerPage || totalCollections <= (page + 1) * rowsPerPage }}
                             backIconButtonProps={{ disabled: loadingCollections || page === 0 }}
                         />
                     </Paper>

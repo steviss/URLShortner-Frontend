@@ -13,8 +13,8 @@ export interface ApiCalls {
     logout: (arg: LogoutFormType) => Promise<ResponseDataType<LogoutResponse>>;
     me: () => Promise<ResponseDataType<UserType>>;
     //Redirect Api Calls
-    createRedirect: (arg: CreateRedirectFormType) => Promise<ResponseDataType<RedirectType>>;
     claimRedirect: (arg: ClaimRedirectFormType) => Promise<ResponseDataType<RedirectType>>;
+    createRedirect: (arg: CreateRedirectFormType) => Promise<ResponseDataType<RedirectType>>;
     readRedirect: (id: string) => Promise<ResponseDataType<RedirectType>>;
     updateRedirect: (arg: UpdateRedirectFormType) => Promise<ResponseDataType<RedirectType>>;
     deleteRedirect: (id: string) => Promise<ResponseDataType<DeleteResponse>>;

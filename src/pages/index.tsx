@@ -7,5 +7,7 @@ import { PrivacyPage } from './Privacy/PrivacyPage';
 import { RegisterPage } from './Register/RegisterPage';
 import { TermsPage } from './Terms/TermsPage';
 import { LoadingPage } from './Loading/LoadingPage';
+import { CollectionPage } from './Collection/CollectionPage';
+import { RedirectPage } from './Redirect/RedirectPage';
 
-export { IndexPage, DashboardPage, LoginPage, RegisterPage, PrivacyPage, TermsPage, ForgotPasswordPage, ChangePasswordPage, LoadingPage };
+export { IndexPage, DashboardPage, LoginPage, RegisterPage, PrivacyPage, TermsPage, ForgotPasswordPage, ChangePasswordPage, LoadingPage, CollectionPage, RedirectPage };

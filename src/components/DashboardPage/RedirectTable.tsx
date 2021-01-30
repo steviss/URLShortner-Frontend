@@ -307,7 +307,7 @@ export const RedirectTable: React.FC = observer(() => {
                                         );
                                     })}
                                     {loadingMoreSkeleton()}
-                                    {emptyRows > 0 && rowsPerPage < 10 && !loadingRedirects && (
+                                    {emptyRows > 0 && !loadingRedirects && (
                                         <TableRow
                                             style={{
                                                 height: 81 * emptyRows,
@@ -329,7 +329,7 @@ export const RedirectTable: React.FC = observer(() => {
                             page={page}
                             onPageChange={handleChangePage}
                             onRowsPerPageChange={handleChangeRowsPerPage}
-                            nextIconButtonProps={{ disabled: loadingRedirects || emptyRows > 0 }}
+                            nextIconButtonProps={{ disabled: loadingRedirects || emptyRows > 0 || totalRedirects <= rowsPerPage || totalRedirects <= (page + 1) * rowsPerPage }}
                             backIconButtonProps={{ disabled: loadingRedirects || page === 0 }}
                         />
                     </Paper>
