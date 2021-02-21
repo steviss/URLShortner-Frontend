@@ -10,7 +10,7 @@ interface UserType {
 
 export class UserStore extends BaseStore {
     user: UserType = {} as UserType;
-    userPermissions: UserPermissions = 0;
+    userPermissions: UserPermissions = 1;
     cookieConsent: boolean = false;
     constructor(rootStore: RootStore) {
         super(rootStore);

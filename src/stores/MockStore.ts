@@ -3,29 +3,54 @@ import { UserType, UserPermissions } from '../types/User';
 import { ApiCalls } from './ApiCalls';
 import BaseStore from './BaseStore';
 import { ClaimRedirectFormType, CreateRedirectFormType, RedirectType, UpdateRedirectFormType } from '../types/Redirect';
-import { ClickType } from '../types/Click';
+import { AddressType, ClickType } from '../types/Click';
 import { v4 } from 'uuid';
 import { CollectionStrippedType, CollectionType } from '../types/Collection';
 import faker from 'faker';
 
-const fakerRedirects = (): RedirectType[] => {
-    return Array.from(new Array(150)).map((_, index) => {
+const fakeRedirects = [] as RedirectType[];
+
+const fakerClicks = (size: number): ClickType[] => {
+    return Array.from(new Array(size)).map(() => {
+        let tempAddress = Object.assign({
+            latitude: faker.address.latitude(),
+            longitude: faker.address.longitude(),
+            country: faker.address.country(),
+            county: faker.address.county(),
+            state: faker.address.state(),
+        }) as AddressType;
         return Object.assign({
             id: faker.random.uuid(),
-            slug: faker.random.word(),
-            url: faker.internet.url(),
+            address: tempAddress,
+            refferer: faker.internet.url(),
             createdAt: faker.date.past(),
-            ownerId: faker.random.uuid(),
-            clicks: [] as ClickType[],
-            collections: [] as CollectionType[],
-        }) as RedirectType;
+        }) as ClickType;
+    }) as ClickType[];
+};
+
+const fakerRedirects = (size: number): RedirectType[] => {
+    return Array.from(new Array(size)).map(() => {
+        let id = faker.random.uuid(),
+            clicks = Math.floor(Math.random() * 100) + 1,
+            temp = Object.assign({
+                id,
+                slug: faker.random.word(),
+                url: faker.internet.url(),
+                createdAt: faker.date.past(),
+                ownerId: faker.random.uuid(),
+                clicks: fakerClicks(clicks),
+                collections: [] as CollectionType[],
+            }) as RedirectType;
+        fakeRedirects.push(temp);
+        return temp;
     }) as RedirectType[];
 };
 
-const fakerCollecitons = (): CollectionType[] => {
-    return Array.from(new Array(50)).map((_, index) => {
+const fakerCollections = (size: number): CollectionType[] => {
+    return Array.from(new Array(size)).map(() => {
+        let id = faker.random.uuid();
         return Object.assign({
-            id: faker.random.uuid(),
+            id,
             name: faker.random.word(),
             url: faker.internet.url(),
             createdAt: faker.date.past(),
@@ -38,8 +63,8 @@ const fakerCollecitons = (): CollectionType[] => {
 
 export class MockStore extends BaseStore implements ApiCalls {
     mockUser: UserType = { id: '2e8e9194-ae43-41c4-b05b-bace482ae8da', email: 'test@test.com' };
-    mockRedirects: RedirectType[] = fakerRedirects();
-    mockCollections: CollectionType[] = fakerCollecitons();
+    mockRedirects: RedirectType[] = fakerRedirects(150);
+    mockCollections: CollectionType[] = fakerCollections(50);
     register = () => {
         return Promise.resolve<ResponseDataType<UserType>>({ status: 'success', message: 'Succesfully created an account!', data: this.mockUser });
     };
@@ -107,7 +132,6 @@ export class MockStore extends BaseStore implements ApiCalls {
         return Promise.resolve<ResponseDataType<DeleteResponse>>({ status: 'success', message: 'Succesfully deleted a Collection!' });
     };
     //User Api Calls
-
     readUserRedirects = () => {
         this.rootStore.notificationStore.createNotification('success', 'Succesfully retrieved all user redirects.');
         return Promise.resolve<ResponseDataType<PaginatedResponse<RedirectType[]>>>({

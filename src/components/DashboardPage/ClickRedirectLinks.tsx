@@ -15,7 +15,7 @@ export const ClickRedirectLinks = observer(() => {
         redirectStore: { items },
     } = useStore();
     const generateData = () => {
-        let data = items.map((item) => {
+        let data = items.slice(0, 10).map((item) => {
             return {
                 slug: item.slug,
                 clicks: item.clicks.length,

@@ -39,7 +39,7 @@ export const TotalClicksPie = observer(() => {
     const generateFill = () => {
         let labelArray: LabelType[] = [],
             urlArray: UrlType[] = [];
-        items.forEach((item) => {
+        items.slice(0, 10).forEach((item) => {
             let lineObject = Object.assign({ match: { id: item.slug } }) as LabelType,
                 dotObject = Object.assign({ match: { id: item.url } }) as UrlType;
             labelArray.push(lineObject);
@@ -48,7 +48,7 @@ export const TotalClicksPie = observer(() => {
         return [...labelArray, ...urlArray];
     };
     const generateData = () => {
-        let data: DataType[] = items.map((item) => {
+        let data: DataType[] = items.slice(0, 10).map((item) => {
             return {
                 id: item.slug,
                 label: item.url,
@@ -60,7 +60,7 @@ export const TotalClicksPie = observer(() => {
     };
     useEffect(() => {
         let currentClicks = 0;
-        items.forEach((item) => {
+        items.slice(0, 10).forEach((item) => {
             currentClicks = currentClicks + item.clicks.length;
         });
         setTotalClicks(currentClicks);

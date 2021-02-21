@@ -149,7 +149,7 @@ export const CollectionTable: React.FC = observer(() => {
         }
         setSelected(newSelected);
     };
-    const handleChangePage = (event: unknown, newPage: number) => {
+    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
         if (page < newPage) {
             let pageNextItems = (newPage + 1) * rowsPerPage;
             if (pageNextItems > loadedCollections && loadedCollections !== totalCollections) {

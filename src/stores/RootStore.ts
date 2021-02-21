@@ -6,6 +6,7 @@ import { LayoutStore } from './LayoutStore';
 import { MockStore } from './MockStore';
 import { NetworkStore } from './NetworkStore';
 import { NotificationStore } from './NotificationStore';
+import { DashboardPageStore } from './pages/DashboardPageStore';
 import { RedirectStore } from './RedirectStore';
 import { UserStore } from './UserStore';
 
@@ -17,6 +18,8 @@ export class RootStore {
     notificationStore: NotificationStore;
     claimStore: ClaimStore;
     collectionStore: CollectionStore;
+    //page stores
+    dashboardPageStore: DashboardPageStore;
     constructor() {
         this.layoutStore = new LayoutStore(this);
         this.userStore = new UserStore(this);
@@ -24,6 +27,8 @@ export class RootStore {
         this.notificationStore = new NotificationStore(this);
         this.claimStore = new ClaimStore(this);
         this.collectionStore = new CollectionStore(this);
+        //page stores
+        this.dashboardPageStore = new DashboardPageStore(this);
         if (config.__PROD__) {
             this.apiStore = new NetworkStore(this);
         } else {
